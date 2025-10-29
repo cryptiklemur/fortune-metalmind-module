@@ -1,15 +1,17 @@
 class HandlebarHelpers {
-    constructor() {}
-
     register(): void {
-        // this.#registerDummyHandlebar();
-    }
+        Handlebars.registerHelper("eq", (a: unknown, b: unknown) => {
+            return a === b;
+        });
 
-    // #registerDummyHandlebar() {
-    //     Handlebars.registerHelper("dummyHandlebar", () => {
-    //         return true;
-    //     });
-    // }
+        Handlebars.registerHelper("add", (a: number, b: number) => {
+            return a + b;
+        });
+
+        Handlebars.registerHelper("or", (...args: unknown[]) => {
+            return args.slice(0, -1).some(Boolean);
+        });
+    }
 }
 
 export { HandlebarHelpers };

@@ -1,4 +1,11 @@
 {
+    "COSMERE": {
+        "Actor": {
+            "Resource": {
+                "Fortune": "Fortune"
+            }
+        }
+    },
     "FortuneMetalmind": {
         "Display": {
             "Fortune": "Fortune",
@@ -57,6 +64,48 @@
             "RefocusNotAvailable": "Refocus already used. Complete a long rest to restore."
         },
         "Settings": {
+            "StartingFortune": {
+                "Name": "Starting Fortune",
+                "Hint": "How much Fortune new characters start with (default: 1)"
+            },
+            "MaximumFortune": {
+                "Name": "Maximum Fortune",
+                "Hint": "The maximum amount of Fortune a character can store (default: 5)"
+            },
+            "DailyTapsPerRest": {
+                "Name": "Daily Taps Per Long Rest",
+                "Hint": "How many times a character can tap their Fortune Metalmind per long rest (default: 1)"
+            },
+            "FortunePerOpportunity": {
+                "Name": "Fortune Per Opportunity",
+                "Hint": "How much Fortune is gained when converting an Opportunity (default: 1)"
+            },
+            "OpportunityConversionsPerRest": {
+                "Name": "Opportunity Conversions Per Long Rest",
+                "Hint": "How many times a character can convert Opportunities to Fortune per long rest (default: 3)"
+            },
+            "RefocusAttemptsPerRest": {
+                "Name": "Refocus Attempts Per Long Rest",
+                "Hint": "How many times a character can attempt to Refocus per long rest (default: 1)"
+            },
+            "TapOptionsMenu": {
+                "Name": "Fortune Tap Options",
+                "Label": "Configure Tap Options",
+                "Hint": "Configure what players can spend Fortune on"
+            },
+            "RefocusOutcomesMenu": {
+                "Name": "Refocus Outcomes",
+                "Label": "Configure Refocus Outcomes",
+                "Hint": "Configure the results of Refocus meditation"
+            },
+            "TapOptions": {
+                "Name": "Fortune Tap Options (JSON)",
+                "Hint": "Configure what players can spend Fortune on. JSON array of {cost, label, description, effect}. Effects: advantage, auto-success, guaranteed-nat20, custom-macro, custom-script"
+            },
+            "RefocusOutcomes": {
+                "Name": "Refocus Outcomes (JSON)",
+                "Hint": "Configure Refocus meditation outcomes. JSON array of {min, max, fortuneDelta, restoreTap, description}"
+            },
             "ShowTapFlavor": {
                 "Name": "Show Fortune Tap Flavor",
                 "Hint": "Display flavor text in chat when Fortune is tapped (visible to all players)"
@@ -68,6 +117,41 @@
         },
         "Errors": {
             "Generic": "An error occurred in Fortune Metalmind ({context}). Check console for details."
+        },
+        "Forms": {
+            "ResetToDefaults": "Reset to Defaults",
+            "SaveChanges": "Save Changes",
+            "TapOptions": {
+                "Cost": "Cost",
+                "Label": "Label",
+                "LabelPlaceholder": "e.g., Gain Advantage",
+                "Description": "Description",
+                "DescriptionPlaceholder": "e.g., Gain advantage on your next roll",
+                "Effect": "Effect",
+                "Effects": {
+                    "Advantage": "Advantage",
+                    "AutoSuccess": "Automatic Success",
+                    "GuaranteedNat20": "Guaranteed Natural 20",
+                    "CustomMacro": "Custom Macro",
+                    "CustomScript": "Custom Script"
+                },
+                "MacroName": "Macro Name",
+                "MacroNamePlaceholder": "Enter macro name",
+                "ScriptCode": "Script Code",
+                "ScriptCodePlaceholder": "Enter JavaScript code",
+                "Remove": "Remove",
+                "Add": "Add Tap Option"
+            },
+            "RefocusOutcomes": {
+                "Instructions": "Configure the three refocus meditation outcomes based on d20 roll results.",
+                "Outcome": "Outcome",
+                "DiceMin": "Dice Range Min",
+                "DiceMax": "Dice Range Max",
+                "FortuneChange": "Fortune Change",
+                "FortuneChangeHint": "Positive = gain, Negative = lose",
+                "RestoreTap": "Restore Daily Tap",
+                "Description": "Description (shown to player)"
+            }
         }
     }
 }

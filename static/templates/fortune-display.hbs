@@ -1,0 +1,44 @@
+<div class="fortune-metalmind-display">
+    <div class="fortune-header">
+        <i class="fas fa-coins"></i>
+        <span class="fortune-title">{{localize "FortuneMetalmind.Display.Fortune"}}</span>
+    </div>
+
+    <div class="fortune-content">
+        <div class="fortune-points">
+            <span class="current">{{data.current}}</span>
+            <span class="separator">/</span>
+            <span class="max">{{data.max}}</span>
+        </div>
+
+        <div class="fortune-status">
+            {{#if data.tapAvailable}}
+                <span class="status-badge available">
+                    <i class="fas fa-check-circle"></i>
+                    {{localize "FortuneMetalmind.Display.TapAvailable"}}
+                </span>
+            {{else}}
+                <span class="status-badge used">
+                    <i class="fas fa-times-circle"></i>
+                    {{localize "FortuneMetalmind.Display.TapUsed"}}
+                </span>
+            {{/if}}
+        </div>
+
+        <div class="fortune-conversions">
+            <span class="conversions-label">{{localize "FortuneMetalmind.Display.ConversionsRemaining" remaining=data.conversionsRemaining max=data.conversionsMax}}</span>
+        </div>
+
+        <div class="fortune-actions">
+            <button class="fortune-button refocus-button" data-action="refocus" {{#unless data.refocusAvailable}}disabled{{/unless}}>
+                <i class="fas fa-meditation"></i>
+                {{localize "FortuneMetalmind.Refocus.Button"}}
+            </button>
+
+            <button class="fortune-button long-rest-button" data-action="long-rest">
+                <i class="fas fa-bed"></i>
+                {{localize "FortuneMetalmind.LongRest.Button"}}
+            </button>
+        </div>
+    </div>
+</div>

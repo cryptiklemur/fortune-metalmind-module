@@ -1,5 +1,5 @@
+import path from "node:path";
 import fs from "fs-extra";
-import path from "path";
 import prompts from "prompts";
 
 const newModuleIdentifier: string | undefined = (
@@ -8,7 +8,7 @@ const newModuleIdentifier: string | undefined = (
         name: "value",
         format: (v: string) => v.replace(/\W*$/, "").trim(),
         message:
-            "Enter the identifier of your module. (Example: dfreds-convenient-effects)",
+            "Enter the identifier of your module. (Example: fortune-metalmind)",
     })
 ).value;
 
@@ -17,8 +17,7 @@ const newModuleName: string | undefined = (
         type: "text",
         name: "value",
         format: (v: string) => v.replace(/\W*$/, "").trim(),
-        message:
-            "Enter the title of your module. (Example: DFreds Convenient Effects)",
+        message: "Enter the title of your module. (Example: Fortune Metalmind)",
     })
 ).value;
 
@@ -58,7 +57,7 @@ const filesToInclude = [path.resolve(dirToSearch, ".gitignore")];
 const lockFilePath = path.resolve(
     dirToSearch,
     "static",
-    "dfreds-module-template-ts.lock",
+    "cryptiklemur-module-template-ts.lock",
 );
 
 // Recursively find all files in included dirs
@@ -90,8 +89,8 @@ try {
     for (const file of filesToReplaceStrings) {
         const fileData = fs.readFileSync(file, { encoding: "utf8" });
         const replaced = fileData
-            .replace(/dfreds-module-template-ts/g, newModuleIdentifier)
-            .replace(/DFreds Module Template TS/g, newModuleName)
+            .replace(/cryptiklemur-module-template-ts/g, newModuleIdentifier)
+            .replace(/CryptikLemur Module Template TS/g, newModuleName)
             .replace(
                 /A FoundryVTT module template using Typescript/g,
                 newModuleDescription,

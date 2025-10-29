@@ -1,0 +1,13 @@
+<div class="resource fortune-resource" data-resource="fortune">
+    <div class="resource-header">
+        <label class="resource-label">Fortune</label>
+        <button class="fortune-refocus-button" title="{{localize 'FortuneMetalmind.Refocus.Button'}}">
+            <i class="fas fa-meditation"></i>
+        </button>
+    </div>
+    <div class="resource-values">
+        <input type="number" class="fortune-current" value="{{data.current}}" min="0" max="{{data.max}}" />
+        <span class="resource-separator">/</span>
+        <input type="number" class="fortune-max" value="{{data.max}}" min="1" />
+    </div>
+</div>

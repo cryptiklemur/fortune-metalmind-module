@@ -1,0 +1,170 @@
+:root {
+    --cosmere-color-fortune-back: #2d7a2d;
+}
+
+.application.sheet.actor app-actor-resource .resource.for .bar .container .background {
+    background-color: var(--cosmere-color-fortune-back);
+}
+
+.fortune-resource {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fortune-resource .resource-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.fortune-resource .resource-label {
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.fortune-resource .fortune-refocus-button {
+    background: none;
+    border: none;
+    color: #daa520;
+    cursor: pointer;
+    padding: 2px 4px;
+    font-size: 0.9em;
+    transition: color 0.2s;
+}
+
+.fortune-resource .fortune-refocus-button:hover {
+    color: #ffd700;
+}
+
+.fortune-resource .resource-values {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.fortune-resource input[type="number"] {
+    width: 50px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.fortune-resource .fortune-current {
+    font-weight: bold;
+    color: #daa520;
+}
+
+.fortune-resource .resource-separator {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.tap-option-card {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 12px 0;
+    margin-bottom: 8px;
+}
+
+.tap-option-card:first-child {
+    border-top: none;
+}
+
+.tap-option-card .remove-option {
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #dc3545;
+    cursor: pointer;
+}
+
+.tap-option-card .remove-option:hover {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.5);
+}
+
+.tap-option-card .form-group {
+    margin-bottom: 8px;
+}
+
+.form-group.hidden {
+    display: none;
+}
+
+.tap-option-card .custom-field textarea {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+#fortune-refocus-outcomes .refocus-outcome-row {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#fortune-refocus-outcomes .refocus-outcomes-list {
+    margin-bottom: 16px;
+}
+
+#fortune-refocus-outcomes .form-group {
+    margin-bottom: 8px;
+}
+
+#fortune-refocus-outcomes .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+#fortune-refocus-outcomes .form-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+#fortune-refocus-outcomes {
+    color: #000;
+}
+
+#fortune-refocus-outcomes .notes {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+#fortune-refocus-outcomes label {
+    color: #000;
+}
+
+#fortune-refocus-outcomes .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#fortune-refocus-outcomes .hint {
+    font-size: 0.85em;
+    color: #666;
+    font-style: italic;
+}
+
+#fortune-refocus-outcomes textarea,
+#fortune-refocus-outcomes input {
+    color: #000;
+}
+
+#fortune-tap-options textarea,
+#fortune-refocus-outcomes textarea {
+    width: 100%;
+    resize: vertical;
+    font-family: monospace;
+}

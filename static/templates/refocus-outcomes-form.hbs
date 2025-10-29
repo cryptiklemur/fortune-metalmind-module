@@ -1,0 +1,50 @@
+<form>
+    <p class="notes">{{localize "FortuneMetalmind.Forms.RefocusOutcomes.Instructions"}}</p>
+
+    <div class="refocus-outcomes-list">
+        {{#each outcomes as |outcome index|}}
+        <div class="refocus-outcome-row">
+            <h3>{{localize "FortuneMetalmind.Forms.RefocusOutcomes.Outcome"}} {{add index 1}}</h3>
+
+            <div class="form-fields">
+                <div class="form-group">
+                    <label>{{localize "FortuneMetalmind.Forms.RefocusOutcomes.DiceMin"}}</label>
+                    <input type="number" name="outcomes.{{index}}.min" value="{{outcome.min}}" min="1" max="20" />
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "FortuneMetalmind.Forms.RefocusOutcomes.DiceMax"}}</label>
+                    <input type="number" name="outcomes.{{index}}.max" value="{{outcome.max}}" min="1" max="20" />
+                </div>
+
+                <div class="form-group">
+                    <label>{{localize "FortuneMetalmind.Forms.RefocusOutcomes.FortuneChange"}}</label>
+                    <input type="number" name="outcomes.{{index}}.fortuneDelta" value="{{outcome.fortuneDelta}}" min="-10" max="10" />
+                    <span class="hint">{{localize "FortuneMetalmind.Forms.RefocusOutcomes.FortuneChangeHint"}}</span>
+                </div>
+
+                <div class="form-group checkbox-group" style="align-items: flex-start;">
+                    <label>
+                        <input type="checkbox" name="outcomes.{{index}}.restoreTap" {{#if outcome.restoreTap}}checked{{/if}} />
+                        {{localize "FortuneMetalmind.Forms.RefocusOutcomes.RestoreTap"}}
+                    </label>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>{{localize "FortuneMetalmind.Forms.RefocusOutcomes.Description"}}</label>
+                    <textarea name="outcomes.{{index}}.description" rows="2">{{outcome.description}}</textarea>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <footer class="sheet-footer flexrow">
+        <button type="button" name="reset">
+            <i class="fas fa-undo"></i> {{localize "FortuneMetalmind.Forms.ResetToDefaults"}}
+        </button>
+        <button type="submit" name="submit">
+            <i class="fas fa-save"></i> {{localize "FortuneMetalmind.Forms.SaveChanges"}}
+        </button>
+    </footer>
+</form>

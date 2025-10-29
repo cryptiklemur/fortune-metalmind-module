@@ -8,7 +8,7 @@
         "verified": 13,
         "maximum": 13
     },
-    "esmodules": ["vendor.mjs", "fortune-metalmind.mjs"],
+    "esmodules": ["fortune-metalmind.mjs"],
     "scripts": [],
     "styles": ["styles/fortune-metalmind.css"],
     "packs": [],

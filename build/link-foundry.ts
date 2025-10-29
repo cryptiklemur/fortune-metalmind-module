@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import process from "process";
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 import prompts from "prompts";
 import foundryConfig from "../foundryconfig.json" with { type: "json" };
 import moduleJSON from "../static/module.json" with { type: "json" };

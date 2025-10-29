@@ -1,6 +1,6 @@
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 import fsExtra from "fs-extra";
-import path from "path";
 import foundryConfig from "../foundryconfig.json" with { type: "json" };
 
 const sourceDataPath = path.resolve(

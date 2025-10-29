@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 // Clean output directory, or create build directory
 const outDir = path.resolve(process.cwd(), "dist");

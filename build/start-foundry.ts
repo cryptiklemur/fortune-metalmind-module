@@ -1,9 +1,9 @@
-import { exec } from "child_process";
+import { exec } from "node:child_process";
+import path from "node:path";
+import process from "node:process";
+import { promisify } from "node:util";
 import fs from "fs-extra";
-import path from "path";
-import process from "process";
 import prompts from "prompts";
-import { promisify } from "util";
 import foundryConfig from "../foundryconfig.json" with { type: "json" };
 
 if (!foundryConfig.dataPath || !/\bData$/.test(foundryConfig.dataPath)) {
@@ -17,14 +17,17 @@ const versions = Object.keys(foundryConfig.fvtt).map((version) => ({
     title: version,
     value: version,
 }));
-const fvttVersion = versions.length > 1 ? (
-    await prompts({
-        type: "select",
-        name: "value",
-        message: "Select the FoundryVTT version you want to use.",
-        choices: versions,
-    })
-).value as string : versions[0].value as string;
+const fvttVersion =
+    versions.length > 1
+        ? ((
+              await prompts({
+                  type: "select",
+                  name: "value",
+                  message: "Select the FoundryVTT version you want to use.",
+                  choices: versions,
+              })
+          ).value as string)
+        : (versions[0].value as string);
 
 const fvttPath =
     foundryConfig.fvtt[fvttVersion as keyof typeof foundryConfig.fvtt];

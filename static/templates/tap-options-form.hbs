@@ -1,0 +1,58 @@
+<form>
+    {{#each options as |option index|}}
+    <div class="tap-option-card form-group stacked" data-index="{{index}}">
+        <div class="form-group">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.Cost"}}</label>
+            <input type="number" name="options.{{index}}.cost" value="{{option.cost}}" min="1" max="10" />
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.Effect"}}</label>
+            <select name="options.{{index}}.effect" class="effect-select" data-index="{{index}}">
+                <option value="advantage" {{#if (eq option.effect "advantage")}}selected{{/if}}>{{localize "FortuneMetalmind.Forms.TapOptions.Effects.Advantage"}}</option>
+                <option value="auto-success" {{#if (eq option.effect "auto-success")}}selected{{/if}}>{{localize "FortuneMetalmind.Forms.TapOptions.Effects.AutoSuccess"}}</option>
+                <option value="guaranteed-nat20" {{#if (eq option.effect "guaranteed-nat20")}}selected{{/if}}>{{localize "FortuneMetalmind.Forms.TapOptions.Effects.GuaranteedNat20"}}</option>
+                <option value="custom-macro" {{#if (eq option.effect "custom-macro")}}selected{{/if}}>{{localize "FortuneMetalmind.Forms.TapOptions.Effects.CustomMacro"}}</option>
+                <option value="custom-script" {{#if (eq option.effect "custom-script")}}selected{{/if}}>{{localize "FortuneMetalmind.Forms.TapOptions.Effects.CustomScript"}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.Label"}}</label>
+            <input type="text" name="options.{{index}}.label" value="{{option.label}}" placeholder="{{localize 'FortuneMetalmind.Forms.TapOptions.LabelPlaceholder'}}" />
+        </div>
+
+        <div class="form-group">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.Description"}}</label>
+            <textarea name="options.{{index}}.description" rows="2" placeholder="{{localize 'FortuneMetalmind.Forms.TapOptions.DescriptionPlaceholder'}}">{{option.description}}</textarea>
+        </div>
+
+        <div class="form-group custom-macro-field {{#unless (eq option.effect "custom-macro")}}hidden{{/unless}}" data-custom-type="macro" data-custom-index="{{index}}">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.MacroName"}}</label>
+            <input type="text" name="options.{{index}}.customMacro" value="{{option.customMacro}}" placeholder="{{localize 'FortuneMetalmind.Forms.TapOptions.MacroNamePlaceholder'}}" />
+        </div>
+
+        <div class="form-group custom-script-field {{#unless (eq option.effect "custom-script")}}hidden{{/unless}}" data-custom-type="script" data-custom-index="{{index}}">
+            <label>{{localize "FortuneMetalmind.Forms.TapOptions.ScriptCode"}}</label>
+            <textarea name="options.{{index}}.customScript" rows="4" placeholder="{{localize 'FortuneMetalmind.Forms.TapOptions.ScriptCodePlaceholder'}}">{{option.customScript}}</textarea>
+        </div>
+
+        <button type="button" class="remove-option" data-index="{{index}}">
+            <i class="fas fa-trash"></i> {{localize "FortuneMetalmind.Forms.TapOptions.Remove"}}
+        </button>
+    </div>
+    {{/each}}
+
+    <button type="button" class="add-option">
+        <i class="fas fa-plus"></i> {{localize "FortuneMetalmind.Forms.TapOptions.Add"}}
+    </button>
+
+    <footer class="sheet-footer flexrow">
+        <button type="button" name="reset">
+            <i class="fas fa-undo"></i> {{localize "FortuneMetalmind.Forms.ResetToDefaults"}}
+        </button>
+        <button type="submit" name="submit">
+            <i class="fas fa-save"></i> {{localize "FortuneMetalmind.Forms.SaveChanges"}}
+        </button>
+    </footer>
+</form>

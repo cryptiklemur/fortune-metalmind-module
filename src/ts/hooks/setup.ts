@@ -1,8 +1,8 @@
 import type Application from "@client/appv1/api/application-v1.d.mts";
-import { MODULE_ID } from "../constants.ts";
-import { Listener } from "./index.ts";
-import { libWrapper } from "@static/lib/shim.ts";
 import type Token from "@client/canvas/placeables/token.d.mts";
+import { libWrapper } from "@static/lib/shim.ts";
+import { MODULE_ID } from "../constants.ts";
+import type { Listener } from "./index.ts";
 
 const Setup: Listener = {
     listen(): void {
@@ -34,11 +34,10 @@ const Setup: Listener = {
                 "Token.prototype._onDragLeftStart",
                 async function (
                     this: Token,
-                    wrapped: (event: any) => any,
+                    wrapped: (event: unknown) => unknown,
                     event: Event,
                 ) {
-                    const result = wrapped(event);
-                    return result;
+                    return wrapped(event);
                 },
                 "WRAPPER",
             );

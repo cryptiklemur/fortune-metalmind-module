@@ -1,11 +1,9 @@
-import * as Vite from "vite";
-import checker from "vite-plugin-checker";
+import fs from "node:fs";
+import path from "node:path";
 import esbuild from "esbuild";
-import fs from "fs";
-import path from "path";
-import tsconfigPaths from "vite-tsconfig-paths";
+import * as Vite from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import packageJSON from "./package.json" with { type: "json" };
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const PACKAGE_ID = "modules/fortune-metalmind";
 
@@ -17,7 +15,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
               ? "stage"
               : "development";
     const outDir = "dist";
-    const plugins = [checker({ typescript: true }), tsconfigPaths()];
+    const plugins = [tsconfigPaths()];
 
     console.log(`Build mode: ${buildMode}`);
 
@@ -57,12 +55,10 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
             "./fortune-metalmind.mjs",
             `/** ${message} */\n\nwindow.global = window;\nimport "./src/ts/module.ts";\n`,
         );
-        fs.writeFileSync("./vendor.mjs", `/** ${message} */\n`);
     }
 
     return {
-        base:
-            command === "build" ? "./" : `/modules/fortune-metalmind/`,
+        base: command === "build" ? "./" : `/modules/fortune-metalmind/`,
         publicDir: "static",
         define: {
             BUILD_MODE: JSON.stringify(buildMode),
@@ -89,11 +85,6 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
                     assetFileNames: "styles/fortune-metalmind.css",
                     chunkFileNames: "[name].mjs",
                     entryFileNames: "fortune-metalmind.mjs",
-                    manualChunks: {
-                        vendor: Object.keys(packageJSON.dependencies)
-                            ? Object.keys(packageJSON.dependencies)
-                            : [],
-                    },
                 },
             },
             target: "es2022",
@@ -114,8 +105,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
             port: 30001,
             open: false,
             proxy: {
-                "^(?!/modules/fortune-metalmind/)":
-                    "http://localhost:30000/",
+                "^(?!/modules/fortune-metalmind/)": "http://localhost:30000/",
                 "/socket.io": {
                     target: "ws://localhost:30000",
                     ws: true,
@@ -156,10 +146,7 @@ function deleteLockFilePlugin(): Vite.Plugin {
         },
         writeBundle(outputOptions) {
             const outDir = outputOptions.dir ?? "";
-            const lockFile = path.resolve(
-                outDir,
-                "fortune-metalmind.lock",
-            );
+            const lockFile = path.resolve(outDir, "fortune-metalmind.lock");
             if (fs.existsSync(lockFile)) {
                 fs.rmSync(lockFile);
             }
