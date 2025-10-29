@@ -1,11 +1,12 @@
 import type Module from "@client/packages/module.d.mts";
+import { FortuneManager } from "./fortune-manager.ts";
 
 interface ThisModule extends Module {
     api: ThisApi;
 }
 
 interface ThisApi {
-    test(): void;
+    FortuneManager: typeof FortuneManager;
 }
 
 export { type ThisModule, type ThisApi };

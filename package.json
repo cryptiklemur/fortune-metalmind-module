@@ -1,7 +1,7 @@
 {
-    "name": "dfreds-module-template-ts",
+    "name": "fortune-metalmind",
     "version": "1.0.0",
-    "description": "A FoundryVTT module template using Typescript",
+    "description": "Adds Chromium Metalmind (Fortune) mechanics to the Cosmere RPG system",
     "private": true,
     "type": "module",
     "scripts": {
@@ -14,7 +14,7 @@
         "rename-module": "tsx ./build/rename-module.ts",
         "watch": "tsc && npm run clean && vite build --watch --mode development",
         "link": "tsx ./build/link-foundry.ts",
-        "update-types": "tsx ./build/update-pf2e-types.ts && tsx ./build/copy-pf2e-types.ts",
+        "update-types": "tsx ./build/update-types.ts && tsx ./build/copy-types.ts",
         "test": "jest",
         "lint": "npm run lint:ts && npm run lint:json && npm run prettier:scss",
         "lint:ts": "eslint ./src --ext .ts",

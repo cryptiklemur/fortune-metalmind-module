@@ -1,5 +1,6 @@
 import { ThisModule } from "../api.ts";
 import { MODULE_ID } from "../constants.ts";
+import { FortuneManager } from "../fortune-manager.ts";
 import { HandlebarHelpers } from "../handlebar-helpers.ts";
 import { Settings } from "../settings.ts";
 import { Listener } from "./index.ts";
@@ -11,9 +12,7 @@ const Init: Listener = {
             new HandlebarHelpers().register();
 
             (game.modules.get(MODULE_ID) as ThisModule).api = {
-                test(): void {
-                    console.log("Cool");
-                },
+                FortuneManager,
             };
         });
     },

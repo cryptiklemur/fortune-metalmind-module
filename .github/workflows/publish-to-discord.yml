@@ -15,6 +15,6 @@ jobs:
         uses: SethCohen/github-releases-to-discord@v1.16.2
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          username: "DFreds Module Template TS - Release"
+          username: "Fortune Metalmind - Release"
           content: "<@&1200173776898371635> <@&TODO_OTHER_ROLE_ID>"
           footer_timestamp: true

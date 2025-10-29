@@ -1,20 +1,26 @@
 {
-    "id": "dfreds-module-template-ts",
-    "title": "DFreds Module Template TS",
-    "description": "A FoundryVTT module template using Typescript",
+    "id": "fortune-metalmind",
+    "title": "Fortune Metalmind",
+    "description": "Adds Chromium Metalmind (Fortune) mechanics to the Cosmere RPG system",
     "version": "1.0.0",
     "compatibility": {
         "minimum": 13,
         "verified": 13,
         "maximum": 13
     },
-    "esmodules": ["vendor.mjs", "dfreds-module-template-ts.mjs"],
+    "esmodules": ["vendor.mjs", "fortune-metalmind.mjs"],
     "scripts": [],
-    "styles": ["styles/dfreds-module-template-ts.css"],
+    "styles": ["styles/fortune-metalmind.css"],
     "packs": [],
     "packFolders": [],
     "relationships": {
-        "systems": [],
+        "systems": [
+            {
+                "id": "cosmere-rpg",
+                "type": "system",
+                "compatibility": {}
+            }
+        ],
         "requires": []
     },
     "languages": [
@@ -26,19 +32,18 @@
     ],
     "authors": [
         {
-            "name": "DFreds",
-            "url": "https://github.com/DFreds",
-            "discord": "DFreds#1238"
+            "name": "Your Name",
+            "url": "https://github.com/yourusername"
         }
     ],
     "socket": false,
-    "url": "https://github.com/DFreds/dfreds-module-template-ts",
-    "manifest": "https://github.com/DFreds/dfreds-module-template-ts/releases/latest/download/module.json",
-    "download": "https://github.com/DFreds/dfreds-module-template-ts/releases/download/v1.0.0/dfreds-module-template-ts.zip",
-    "license": "https://github.com/DFreds/dfreds-module-template-ts/blob/main/LICENSE",
-    "readme": "https://github.com/DFreds/dfreds-module-template-ts/blob/main/README.md",
-    "bugs": "https://github.com/DFreds/dfreds-module-template-ts/issues",
-    "changelog": "https://github.com/DFreds/dfreds-module-template-ts/releases",
+    "url": "https://github.com/yourusername/fortune-metalmind",
+    "manifest": "https://github.com/yourusername/fortune-metalmind/releases/latest/download/module.json",
+    "download": "https://github.com/yourusername/fortune-metalmind/releases/download/v1.0.0/fortune-metalmind.zip",
+    "license": "https://github.com/yourusername/fortune-metalmind/blob/main/LICENSE",
+    "readme": "https://github.com/yourusername/fortune-metalmind/blob/main/README.md",
+    "bugs": "https://github.com/yourusername/fortune-metalmind/issues",
+    "changelog": "https://github.com/yourusername/fortune-metalmind/releases",
     "library": false,
     "media": []
 }

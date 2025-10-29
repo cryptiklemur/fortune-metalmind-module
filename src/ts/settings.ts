@@ -1,13 +1,22 @@
 import { MODULE_ID } from "./constants.ts";
 
 class Settings {
-    // Settings keys
-    #SAMPLE = "sample";
+    #SHOW_TAP_FLAVOR = "showTapFlavor";
+    #ENABLE_AUTO_REST_DETECTION = "enableAutoRestDetection";
 
     register(): void {
-        game.settings.register(MODULE_ID, this.#SAMPLE, {
-            name: "ModuleTemplate.Settings.SampleSetting.Name",
-            hint: "ModuleTemplate.Settings.SampleSetting.Hint",
+        game.settings.register(MODULE_ID, this.#SHOW_TAP_FLAVOR, {
+            name: "FortuneMetalmind.Settings.ShowTapFlavor.Name",
+            hint: "FortuneMetalmind.Settings.ShowTapFlavor.Hint",
+            scope: "world",
+            config: true,
+            default: true,
+            type: Boolean,
+        });
+
+        game.settings.register(MODULE_ID, this.#ENABLE_AUTO_REST_DETECTION, {
+            name: "FortuneMetalmind.Settings.AutoRestDetection.Name",
+            hint: "FortuneMetalmind.Settings.AutoRestDetection.Hint",
             scope: "world",
             config: true,
             default: true,
@@ -15,12 +24,15 @@ class Settings {
         });
     }
 
-    get sample(): boolean {
-        return game.settings.get(MODULE_ID, this.#SAMPLE) as boolean;
+    get showTapFlavor(): boolean {
+        return game.settings.get(MODULE_ID, this.#SHOW_TAP_FLAVOR) as boolean;
     }
 
-    async setSample(value: boolean): Promise<unknown> {
-        return game.settings.set(MODULE_ID, this.#SAMPLE, value);
+    get enableAutoRestDetection(): boolean {
+        return game.settings.get(
+            MODULE_ID,
+            this.#ENABLE_AUTO_REST_DETECTION,
+        ) as boolean;
     }
 }
 

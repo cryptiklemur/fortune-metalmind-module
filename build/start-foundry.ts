@@ -13,17 +13,18 @@ if (!foundryConfig.dataPath || !/\bData$/.test(foundryConfig.dataPath)) {
     process.exit(1);
 }
 
-const fvttVersion = (
+const versions = Object.keys(foundryConfig.fvtt).map((version) => ({
+    title: version,
+    value: version,
+}));
+const fvttVersion = versions.length > 1 ? (
     await prompts({
         type: "select",
         name: "value",
         message: "Select the FoundryVTT version you want to use.",
-        choices: Object.keys(foundryConfig.fvtt).map((version) => ({
-            title: version,
-            value: version,
-        })),
+        choices: versions,
     })
-).value as string;
+).value as string : versions[0].value as string;
 
 const fvttPath =
     foundryConfig.fvtt[fvttVersion as keyof typeof foundryConfig.fvtt];

@@ -1,10 +1,10 @@
 <div align="center">
   <img src="https://i.imgur.com/gOZy3Jf.png" width="200" height="200"/>
 </div>
-<h1 align="center">DFreds Module Template TS</h1>
+<h1 align="center">Fortune Metalmind</h1>
 
 <h4 align="center">
-  <a href="https://github.com/new?template_name=dfreds-module-template-ts&template_owner=DFreds">Use Template</a>
+  <a href="https://github.com/new?template_name=fortune-metalmind&template_owner=DFreds">Use Template</a>
   ·
   <a href="https://discord.gg/Wq8AEV9bWb">Discord</a>
   ·
@@ -12,12 +12,12 @@
 </h4>
 
 <p align="center">
-    <a href="https://github.com/DFreds/dfreds-module-template-ts/pulse"><img src="https://img.shields.io/github/last-commit/DFreds/dfreds-module-template-ts?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=302D41"/></a>
-    <a href="https://github.com/DFreds/dfreds-module-template-ts/releases/latest"><img src="https://img.shields.io/github/v/release/DFreds/dfreds-module-template-ts?style=for-the-badge&logo=gitbook&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/></a>
-    <a href="https://github.com/DFreds/dfreds-module-template-ts/stargazers"><img src="https://img.shields.io/github/stars/DFreds/dfreds-module-template-ts?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=302D41"/></a>
+    <a href="https://github.com/DFreds/fortune-metalmind/pulse"><img src="https://img.shields.io/github/last-commit/DFreds/fortune-metalmind?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=302D41"/></a>
+    <a href="https://github.com/DFreds/fortune-metalmind/releases/latest"><img src="https://img.shields.io/github/v/release/DFreds/fortune-metalmind?style=for-the-badge&logo=gitbook&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/></a>
+    <a href="https://github.com/DFreds/fortune-metalmind/stargazers"><img src="https://img.shields.io/github/stars/DFreds/fortune-metalmind?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=302D41"/></a>
     <br/>
     <br/>
-    <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FDFreds%2Fdfreds-module-template-ts%2Freleases%2Flatest%2Fdownload%2Fmodule.json&query=%24.compatibility.verified&style=for-the-badge&logo=foundryvirtualtabletop&label=Foundry%20Version&color=%23fe6a1f"/>
+    <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FDFreds%2Ffortune-metalmind%2Freleases%2Flatest%2Fdownload%2Fmodule.json&query=%24.compatibility.verified&style=for-the-badge&logo=foundryvirtualtabletop&label=Foundry%20Version&color=%23fe6a1f"/>
     <br/>
     <br/>
     <a href="https://www.patreon.com/dfreds"><img src="https://img.shields.io/badge/-Patreon-%23f96854?style=for-the-badge&logo=patreon"/></a>
@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-    <b>DFreds Module Template TS</b> is a FoundryVTT module template that uses Typescript and Vite for development.
+    <b>Fortune Metalmind</b> is a FoundryVTT module template that uses Typescript and Vite for development.
 </p>
 
 ## Features

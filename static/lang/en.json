@@ -1,10 +1,73 @@
 {
-    "ModuleTemplate": {
-        "Settings": {
-            "SampleSetting": {
-                "Name": "Sample Setting Name",
-                "Hint": "Sample setting hint"
+    "FortuneMetalmind": {
+        "Display": {
+            "Fortune": "Fortune",
+            "CurrentFortune": "Current Fortune: {current}/{max}",
+            "TapAvailable": "Tap Available",
+            "TapUsed": "Tap Used",
+            "ConversionsRemaining": "Conversions: {remaining}/{max}",
+            "RefocusAvailable": "Refocus Available"
+        },
+        "Tap": {
+            "Title": "Tap Fortune",
+            "SelectOption": "Select Fortune Tap",
+            "Advantage": {
+                "Label": "Gain Advantage (1 Fortune)",
+                "Description": "Gain advantage on your next roll"
+            },
+            "AutoSuccess": {
+                "Label": "Auto-Success (2 Fortune)",
+                "Description": "Automatically succeed on your next roll (DM discretion)"
+            },
+            "GuaranteedNat20": {
+                "Label": "Guaranteed Natural 20 (5 Fortune)",
+                "Description": "Roll a guaranteed natural 20"
             }
+        },
+        "Refocus": {
+            "Title": "Refocus",
+            "Button": "Refocus",
+            "RollFlavor": "Fortune Metalmind Refocus Meditation",
+            "Success": "Refocus successful! Daily tap restored.",
+            "Failure": "Refocus failed. Lost 1 Fortune point.",
+            "CriticalSuccess": "Perfect meditation! Daily tap restored and gained 2 Fortune points!",
+            "Description": "You meditate with your chromium medallion for 10 minutes, attempting to regain your connection to stored Fortune."
+        },
+        "Opportunity": {
+            "Title": "Opportunity Detected",
+            "Message": "You rolled an Opportunity! Convert it to Fortune?",
+            "Convert": "Store Fortune",
+            "Decline": "Keep Opportunity",
+            "Success": "Opportunity converted to Fortune! Current: {current}/{max}",
+            "Description": "You have the option to convert this Opportunity into Fortune."
+        },
+        "LongRest": {
+            "Button": "Complete Long Rest",
+            "Confirmation": "Complete Long Rest and reset Fortune abilities?",
+            "Complete": "Long Rest completed. Fortune abilities restored."
+        },
+        "ChatFlavor": {
+            "TapFortune": "{actor} touches their chromium medallion..."
+        },
+        "Warnings": {
+            "TapNotAvailable": "Fortune tap already used. Rest or Refocus to restore.",
+            "InsufficientFortune": "Not enough Fortune points.",
+            "NoConversionsRemaining": "No Opportunity conversions remaining this rest.",
+            "FortuneAtMax": "Fortune already at maximum.",
+            "RefocusNotAvailable": "Refocus already used. Complete a long rest to restore."
+        },
+        "Settings": {
+            "ShowTapFlavor": {
+                "Name": "Show Fortune Tap Flavor",
+                "Hint": "Display flavor text in chat when Fortune is tapped (visible to all players)"
+            },
+            "AutoRestDetection": {
+                "Name": "Auto-Detect Long Rests",
+                "Hint": "Automatically restore Fortune abilities when the Cosmere RPG long rest is completed"
+            }
+        },
+        "Errors": {
+            "Generic": "An error occurred in Fortune Metalmind ({context}). Check console for details."
         }
     }
 }
