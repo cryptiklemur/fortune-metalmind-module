@@ -6,7 +6,7 @@
     "type": "module",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cryptiklemur/fortune-metalmind.git"
+        "url": "https://github.com/cryptiklemur/fortune-metalmind"
     },
     "scripts": {
         "build": "tsc && vite build",
