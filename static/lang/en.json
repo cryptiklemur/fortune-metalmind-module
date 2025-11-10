@@ -13,7 +13,7 @@
             "TapAvailable": "Tap Available",
             "TapUsed": "Tap Used",
             "ConversionsRemaining": "Conversions: {remaining}/{max}",
-            "RefocusAvailable": "Refocus Available"
+            "RefocusAvailable": "Re-Connect Available"
         },
         "Tap": {
             "Title": "Tap Fortune",
@@ -32,13 +32,13 @@
             }
         },
         "Refocus": {
-            "Title": "Refocus",
-            "Button": "Refocus",
-            "RollFlavor": "Fortune Metalmind Refocus Meditation",
-            "Success": "Refocus successful! Daily tap restored.",
-            "Failure": "Refocus failed. Lost 1 Fortune point.",
-            "CriticalSuccess": "Perfect meditation! Daily tap restored and gained 2 Fortune points!",
-            "Description": "You meditate with your chromium medallion for 10 minutes, attempting to regain your connection to stored Fortune."
+            "Title": "Re-Connecting",
+            "Button": "Re-Connect",
+            "RollFlavor": "Fortune Metalmind Re-Connecting Meditation",
+            "Success": "Re-connection successful! Daily tap restored.",
+            "Failure": "Re-connection failed. Lost 1 Fortune point.",
+            "CriticalSuccess": "Perfect re-connection! Daily tap restored and gained 2 Fortune points!",
+            "Description": "You meditate with your chromium medallion for 10 minutes, attempting to re-connect to stored Fortune."
         },
         "Opportunity": {
             "Title": "Opportunity Detected",
@@ -57,11 +57,11 @@
             "TapFortune": "{actor} touches their chromium medallion..."
         },
         "Warnings": {
-            "TapNotAvailable": "Fortune tap already used. Rest or Refocus to restore.",
+            "TapNotAvailable": "Fortune tap already used. Rest or Re-Connect to restore.",
             "InsufficientFortune": "Not enough Fortune points.",
             "NoConversionsRemaining": "No Opportunity conversions remaining this rest.",
             "FortuneAtMax": "Fortune already at maximum.",
-            "RefocusNotAvailable": "Refocus already used. Complete a long rest to restore."
+            "RefocusNotAvailable": "Re-Connect already used. Complete a long rest to restore."
         },
         "Settings": {
             "StartingFortune": {
@@ -85,8 +85,8 @@
                 "Hint": "How many times a character can convert Opportunities to Fortune per long rest (default: 3)"
             },
             "RefocusAttemptsPerRest": {
-                "Name": "Refocus Attempts Per Long Rest",
-                "Hint": "How many times a character can attempt to Refocus per long rest (default: 1)"
+                "Name": "Re-Connect Attempts Per Long Rest",
+                "Hint": "How many times a character can attempt to Re-Connect per long rest (default: 1)"
             },
             "TapOptionsMenu": {
                 "Name": "Fortune Tap Options",
@@ -94,17 +94,17 @@
                 "Hint": "Configure what players can spend Fortune on"
             },
             "RefocusOutcomesMenu": {
-                "Name": "Refocus Outcomes",
-                "Label": "Configure Refocus Outcomes",
-                "Hint": "Configure the results of Refocus meditation"
+                "Name": "Re-Connecting Outcomes",
+                "Label": "Configure Re-Connecting Outcomes",
+                "Hint": "Configure the results of Re-Connecting meditation"
             },
             "TapOptions": {
                 "Name": "Fortune Tap Options (JSON)",
                 "Hint": "Configure what players can spend Fortune on. JSON array of {cost, label, description, effect}. Effects: advantage, auto-success, guaranteed-nat20, custom-macro, custom-script"
             },
             "RefocusOutcomes": {
-                "Name": "Refocus Outcomes (JSON)",
-                "Hint": "Configure Refocus meditation outcomes. JSON array of {min, max, fortuneDelta, restoreTap, description}"
+                "Name": "Re-Connecting Outcomes (JSON)",
+                "Hint": "Configure Re-Connecting meditation outcomes. JSON array of {min, max, fortuneDelta, restoreTap, description}"
             },
             "ShowTapFlavor": {
                 "Name": "Show Fortune Tap Flavor",
@@ -143,7 +143,7 @@
                 "Add": "Add Tap Option"
             },
             "RefocusOutcomes": {
-                "Instructions": "Configure the three refocus meditation outcomes based on d20 roll results.",
+                "Instructions": "Configure the three re-connecting meditation outcomes based on d20 roll results.",
                 "Outcome": "Outcome",
                 "DiceMin": "Dice Range Min",
                 "DiceMax": "Dice Range Max",

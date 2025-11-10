@@ -1,0 +1,41 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "npm run build && npm version ${nextRelease.version} --no-git-tag-version"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "cd dist && zip -r ../fortune-metalmind-${nextRelease.version}.zip ./*"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["package.json", "package-lock.json", "static/module.json"],
+        "message": "chore(release): ${nextRelease.version}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "fortune-metalmind-*.zip",
+            "label": "Module ZIP"
+          },
+          {
+            "path": "dist/module.json",
+            "label": "Module Manifest"
+          }
+        ]
+      }
+    ]
+  ]
+}

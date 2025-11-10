@@ -1,7 +1,3 @@
-import type Application from "@client/appv1/api/application-v1.d.mts";
-import type Token from "@client/canvas/placeables/token.d.mts";
-import { libWrapper } from "@static/lib/shim.ts";
-import { MODULE_ID } from "../constants.ts";
 import type { Listener } from "./index.ts";
 
 const Setup: Listener = {
@@ -10,54 +6,8 @@ const Setup: Listener = {
             if (BUILD_MODE === "development") {
                 CONFIG.debug.hooks = true;
             }
-
-            // Various libWrapper examples
-
-            libWrapper.register(
-                MODULE_ID,
-                "Application.prototype.bringToTop",
-                function (this: Application, wrapped: () => void) {
-                    wrapped();
-                },
-            );
-            libWrapper.register(
-                MODULE_ID,
-                "Application.prototype.minimize",
-                function (this: Application, wrapped: () => Promise<boolean>) {
-                    const r = wrapped();
-                    r.then(() => console.log("yay"));
-                    return r;
-                },
-            );
-            libWrapper.register(
-                MODULE_ID,
-                "Token.prototype._onDragLeftStart",
-                async function (
-                    this: Token,
-                    wrapped: (event: unknown) => unknown,
-                    event: Event,
-                ) {
-                    return wrapped(event);
-                },
-                "WRAPPER",
-            );
-            // Playlist overrides
-            libWrapper.register(
-                MODULE_ID,
-                "Playlist.prototype._onSoundStart",
-                onSoundStartWrapper,
-                "WRAPPER",
-            );
         });
     },
 };
-
-async function onSoundStartWrapper(
-    this: Playlist,
-    wrapped: (sound: PlaylistSound<null>) => void,
-    sound: PlaylistSound<null>,
-): Promise<void> {
-    wrapped(sound);
-}
 
 export { Setup };

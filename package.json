@@ -1,9 +1,13 @@
 {
     "name": "fortune-metalmind",
-    "version": "1.0.0",
+    "version": "0.5.0",
     "description": "Adds Chromium Metalmind (Fortune) mechanics to the Cosmere RPG system",
     "private": true,
     "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cryptiklemur/fortune-metalmind.git"
+    },
     "scripts": {
         "build": "tsc && vite build",
         "stage": "tsc && npm run clean && vite build --mode stage",
@@ -30,6 +34,8 @@
         "@pixi/basis": "7.4.3",
         "@pixi/graphics-smooth": "1.1.1",
         "@pixi/particle-emitter": "5.0.8",
+        "@semantic-release/exec": "^7.1.0",
+        "@semantic-release/git": "^10.0.1",
         "@sveltejs/vite-plugin-svelte": "^5.0.3",
         "@types/fs-extra": "^11.0.4",
         "@types/glob": "^8.1.0",
@@ -71,6 +77,7 @@
         "prosemirror-tables": "^1.7.1",
         "prosemirror-transform": "^1.10.4",
         "prosemirror-view": "^1.39.2",
+        "semantic-release": "^24.2.9",
         "socket.io": "4.8.1",
         "socket.io-client": "4.8.1",
         "svelte-preprocess": "^6.0.3",

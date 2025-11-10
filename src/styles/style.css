@@ -1,9 +1,14 @@
 :root {
-    --cosmere-color-fortune-back: #2d7a2d;
+    --cosmere-color-fortune-back: #4a5568;
+    --cosmere-color-fortune-fill: #8e9aaf;
 }
 
-.application.sheet.actor app-actor-resource .resource.for .bar .container .background {
-    background-color: var(--cosmere-color-fortune-back);
+.resource.for[data-id="for"] .background {
+    background-color: var(--cosmere-color-fortune-back) !important;
+}
+
+.resource.for[data-id="for"] .inner-bar {
+    background-color: var(--cosmere-color-fortune-fill) !important;
 }
 
 .fortune-resource {
@@ -168,3 +173,157 @@
     resize: vertical;
     font-family: monospace;
 }
+
+.fortune-tap-section {
+    margin: 12px 0;
+}
+
+.fortune-tap-section fieldset {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 3px;
+}
+
+.fortune-tap-section legend {
+    padding: 0 8px;
+    font-weight: bold;
+}
+
+.fortune-tap-section .fortune-count {
+    color: #666;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.fortune-tap-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fortune-tap-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fortune-tap-option:hover {
+    background: rgba(218, 165, 32, 0.1);
+    border-color: rgba(218, 165, 32, 0.3);
+}
+
+.fortune-tap-option.selected {
+    background: rgba(218, 165, 32, 0.2);
+    border-color: rgba(218, 165, 32, 0.5);
+    font-weight: bold;
+}
+
+.fortune-tap-option .option-cost {
+    color: #666;
+    font-size: 0.85em;
+}
+
+.fortune-tap-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.fortune-tap-option:disabled:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.fortune-auto-success {
+    padding: 12px;
+    background: rgba(218, 165, 32, 0.1);
+    border-left: 4px solid #daa520;
+    border-radius: 4px;
+}
+
+.fortune-auto-success h3 {
+    margin: 0 0 8px 0;
+    color: #daa520;
+    font-size: 1.1em;
+}
+
+.fortune-auto-success p {
+    margin: 4px 0;
+}
+
+.fortune-auto-success em {
+    color: #888;
+}
+
+.fortune-dialog .fortune-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.fortune-dialog .fortune-header h3 {
+    margin: 0 0 8px 0;
+}
+
+.fortune-dialog .tap-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.fortune-dialog .tap-status.available {
+    background: rgba(34, 139, 34, 0.2);
+    color: #90ee90;
+}
+
+.fortune-dialog .tap-status.unavailable {
+    background: rgba(139, 0, 0, 0.2);
+    color: #ff6b6b;
+}
+
+.fortune-dialog .fortune-section {
+    margin-bottom: 16px;
+}
+
+.fortune-dialog .fortune-section h4 {
+    margin: 0 0 8px 0;
+    font-size: 1em;
+}
+
+.fortune-dialog .fortune-tap-btn,
+.fortune-dialog .fortune-store-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.fortune-dialog .fortune-tap-btn:hover:not(:disabled),
+.fortune-dialog .fortune-store-btn:hover:not(:disabled) {
+    background: rgba(218, 165, 32, 0.1);
+    border-color: rgba(218, 165, 32, 0.3);
+}
+
+.fortune-dialog .fortune-tap-btn:disabled,
+.fortune-dialog .fortune-store-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.fortune-dialog .option-cost,
+.fortune-dialog .conversions-remaining {
+    color: #666;
+    font-size: 0.85em;
+}
+

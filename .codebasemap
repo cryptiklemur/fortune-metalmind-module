@@ -1,0 +1,1721 @@
+{
+  "metadata": {
+    "version": 1,
+    "root": "/Users/aaron/projects/cryptiklemur/foundry/fortune-metalmind",
+    "createdAt": "2025-11-10T16:25:08.718Z",
+    "updatedAt": "2025-11-10T16:25:08.718Z",
+    "totalFiles": 25
+  },
+  "tree": {
+    "name": "fortune-metalmind",
+    "type": "dir",
+    "children": [
+      {
+        "name": "src",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ts",
+            "type": "dir",
+            "children": [
+              {
+                "name": "forms",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "refocus-outcomes-form.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "tap-options-form.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "hooks",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "actor-ready.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "index.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "init.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "pre-create-chat-message.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "pre-skill-roll-config.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "pre-skill-roll.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "render-actor-sheet.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "render-roll-dialog.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "rest.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "setup.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "skill-roll.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "types",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "fortune-data.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "api.ts",
+                "type": "file"
+              },
+              {
+                "name": "constants.ts",
+                "type": "file"
+              },
+              {
+                "name": "fortune-manager.ts",
+                "type": "file"
+              },
+              {
+                "name": "global.ts",
+                "type": "file"
+              },
+              {
+                "name": "handlebar-helpers.ts",
+                "type": "file"
+              },
+              {
+                "name": "logger.ts",
+                "type": "file"
+              },
+              {
+                "name": "module.ts",
+                "type": "file"
+              },
+              {
+                "name": "settings.ts",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "static",
+        "type": "dir",
+        "children": [
+          {
+            "name": "lib",
+            "type": "dir",
+            "children": [
+              {
+                "name": "shim.ts",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "types",
+        "type": "dir",
+        "children": [
+          {
+            "name": "libWrapper",
+            "type": "dir",
+            "children": [
+              {
+                "name": "index.d.ts",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "vite.config.ts",
+        "type": "file"
+      }
+    ]
+  },
+  "nodes": [
+    "src/ts/api.ts",
+    "src/ts/constants.ts",
+    "src/ts/forms/refocus-outcomes-form.ts",
+    "src/ts/forms/tap-options-form.ts",
+    "src/ts/fortune-manager.ts",
+    "src/ts/global.ts",
+    "src/ts/handlebar-helpers.ts",
+    "src/ts/hooks/actor-ready.ts",
+    "src/ts/hooks/index.ts",
+    "src/ts/hooks/init.ts",
+    "src/ts/hooks/pre-create-chat-message.ts",
+    "src/ts/hooks/pre-skill-roll-config.ts",
+    "src/ts/hooks/pre-skill-roll.ts",
+    "src/ts/hooks/render-actor-sheet.ts",
+    "src/ts/hooks/render-roll-dialog.ts",
+    "src/ts/hooks/rest.ts",
+    "src/ts/hooks/setup.ts",
+    "src/ts/hooks/skill-roll.ts",
+    "src/ts/logger.ts",
+    "src/ts/module.ts",
+    "src/ts/settings.ts",
+    "src/ts/types/fortune-data.ts",
+    "static/lib/shim.ts",
+    "types/libWrapper/index.d.ts",
+    "vite.config.ts"
+  ],
+  "edges": [
+    {
+      "from": "src/ts/api.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/forms/refocus-outcomes-form.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/forms/refocus-outcomes-form.ts",
+      "to": "src/ts/settings.ts"
+    },
+    {
+      "from": "src/ts/forms/tap-options-form.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/forms/tap-options-form.ts",
+      "to": "src/ts/settings.ts"
+    },
+    {
+      "from": "src/ts/fortune-manager.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/fortune-manager.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/fortune-manager.ts",
+      "to": "src/ts/settings.ts"
+    },
+    {
+      "from": "src/ts/fortune-manager.ts",
+      "to": "src/ts/types/fortune-data.ts"
+    },
+    {
+      "from": "src/ts/hooks/actor-ready.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/actor-ready.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/actor-ready.ts",
+      "to": "src/ts/settings.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/actor-ready.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/init.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/pre-create-chat-message.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/pre-skill-roll-config.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/pre-skill-roll.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/render-actor-sheet.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/render-roll-dialog.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/rest.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/setup.ts"
+    },
+    {
+      "from": "src/ts/hooks/index.ts",
+      "to": "src/ts/hooks/skill-roll.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/api.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/handlebar-helpers.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/init.ts",
+      "to": "src/ts/settings.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-create-chat-message.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-create-chat-message.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-skill-roll-config.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-skill-roll-config.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-skill-roll.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-skill-roll.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/pre-skill-roll.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/render-actor-sheet.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/render-actor-sheet.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/render-roll-dialog.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/hooks/render-roll-dialog.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/render-roll-dialog.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/rest.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/hooks/rest.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/rest.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/hooks/setup.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/hooks/setup.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/skill-roll.ts",
+      "to": "src/ts/fortune-manager.ts"
+    },
+    {
+      "from": "src/ts/hooks/skill-roll.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/hooks/skill-roll.ts",
+      "to": "src/ts/logger.ts"
+    },
+    {
+      "from": "src/ts/logger.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/module.ts",
+      "to": "src/ts/hooks/index.ts"
+    },
+    {
+      "from": "src/ts/settings.ts",
+      "to": "src/ts/constants.ts"
+    },
+    {
+      "from": "src/ts/settings.ts",
+      "to": "src/ts/forms/refocus-outcomes-form.ts"
+    },
+    {
+      "from": "src/ts/settings.ts",
+      "to": "src/ts/forms/tap-options-form.ts"
+    }
+  ],
+  "files": {
+    "src/ts/api.ts": {
+      "imports": [
+        {
+          "from": "@client/packages/module.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "./fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/fortune-manager.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": []
+    },
+    "src/ts/constants.ts": {
+      "imports": [
+        {
+          "from": "@static/module.json",
+          "kind": "import",
+          "isDefault": true
+        }
+      ],
+      "dependencies": [],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "MODULE_ID",
+          "initKind": "unknown",
+          "isExported": true
+        }
+      ]
+    },
+    "src/ts/forms/refocus-outcomes-form.ts": {
+      "imports": [
+        {
+          "from": "../constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "../settings.ts",
+          "kind": "import",
+          "imported": [
+            "RefocusOutcome"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts",
+        "src/ts/settings.ts"
+      ],
+      "functions": [],
+      "classes": [
+        {
+          "name": "RefocusOutcomesForm",
+          "isExported": true,
+          "methods": [
+            {
+              "name": "activateListeners",
+              "params": [
+                {
+                  "name": "html",
+                  "type": "JQuery"
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void"
+            },
+            {
+              "name": "getData",
+              "params": [],
+              "isAsync": false,
+              "returnType": "object"
+            },
+            {
+              "name": "_updateObject",
+              "params": [
+                {
+                  "name": "_event",
+                  "type": "Event"
+                },
+                {
+                  "name": "formData",
+                  "type": "any"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<void>",
+              "isProtected": true
+            },
+            {
+              "name": "validateOutcomes",
+              "params": [
+                {
+                  "name": "outcomes",
+                  "type": "RefocusOutcome[]"
+                }
+              ],
+              "isAsync": false,
+              "returnType": "string | null",
+              "isPrivate": true
+            }
+          ],
+          "properties": [],
+          "extends": "(globalThis as any).FormApplication"
+        }
+      ],
+      "constants": [
+        {
+          "name": "DEFAULT_REFOCUS_OUTCOMES",
+          "initKind": "array",
+          "isExported": false,
+          "type": "RefocusOutcome[]"
+        }
+      ]
+    },
+    "src/ts/forms/tap-options-form.ts": {
+      "imports": [
+        {
+          "from": "../constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "../settings.ts",
+          "kind": "import",
+          "imported": [
+            "TapOption"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts",
+        "src/ts/settings.ts"
+      ],
+      "functions": [],
+      "classes": [
+        {
+          "name": "TapOptionsForm",
+          "isExported": true,
+          "methods": [
+            {
+              "name": "activateListeners",
+              "params": [
+                {
+                  "name": "html",
+                  "type": "JQuery"
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void"
+            },
+            {
+              "name": "getData",
+              "params": [],
+              "isAsync": false,
+              "returnType": "object"
+            },
+            {
+              "name": "_updateObject",
+              "params": [
+                {
+                  "name": "_event",
+                  "type": "Event"
+                },
+                {
+                  "name": "formData",
+                  "type": "any"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<void>",
+              "isProtected": true
+            }
+          ],
+          "properties": [],
+          "extends": "(globalThis as any).FormApplication"
+        }
+      ],
+      "constants": [
+        {
+          "name": "DEFAULT_TAP_OPTIONS",
+          "initKind": "array",
+          "isExported": false,
+          "type": "TapOption[]"
+        }
+      ]
+    },
+    "src/ts/fortune-manager.ts": {
+      "imports": [
+        {
+          "from": "./constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "./logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./settings.ts",
+          "kind": "import",
+          "imported": [
+            "Settings"
+          ]
+        },
+        {
+          "from": "./types/fortune-data.ts",
+          "kind": "import",
+          "imported": [
+            "DEFAULT_FORTUNE_DATA",
+            "FortuneData",
+            "FortuneTapCost"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts",
+        "src/ts/logger.ts",
+        "src/ts/settings.ts",
+        "src/ts/types/fortune-data.ts"
+      ],
+      "functions": [],
+      "classes": [
+        {
+          "name": "FortuneManager",
+          "isExported": true,
+          "methods": [
+            {
+              "name": "getFortuneData",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                }
+              ],
+              "isAsync": false,
+              "returnType": "FortuneData",
+              "isStatic": true
+            },
+            {
+              "name": "setFortuneData",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                },
+                {
+                  "name": "data",
+                  "type": "Partial<FortuneData>"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<void>",
+              "isStatic": true
+            },
+            {
+              "name": "adjustFortune",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                },
+                {
+                  "name": "delta",
+                  "type": "number"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<boolean>",
+              "isStatic": true
+            },
+            {
+              "name": "tapFortune",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                },
+                {
+                  "name": "cost",
+                  "type": "FortuneTapCost"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<boolean>",
+              "isStatic": true
+            },
+            {
+              "name": "convertOpportunity",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<boolean>",
+              "isStatic": true
+            },
+            {
+              "name": "performRefocus",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<void>",
+              "isStatic": true
+            },
+            {
+              "name": "longRest",
+              "params": [
+                {
+                  "name": "actor",
+                  "type": "Actor"
+                }
+              ],
+              "isAsync": true,
+              "returnType": "Promise<void>",
+              "isStatic": true
+            }
+          ],
+          "properties": [
+            {
+              "name": "FLAG_KEY",
+              "isStatic": true,
+              "isReadonly": true
+            },
+            {
+              "name": "settings",
+              "isStatic": true
+            }
+          ]
+        }
+      ],
+      "constants": []
+    },
+    "src/ts/global.ts": {
+      "imports": [
+        {
+          "from": "@client/applications/sidebar/tabs/actor-directory.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/applications/sidebar/tabs/chat.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/applications/sidebar/tabs/combat-tracker.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/applications/sidebar/tabs/compendium-directory.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/applications/sidebar/tabs/item-directory.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/applications/ui/hotbar.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/canvas/board.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/canvas/groups/effects.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/config.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/documents/collections/actors.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/documents/wall.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/game.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/ui.d.mts",
+          "kind": "import",
+          "imported": [
+            "FoundryUI"
+          ]
+        }
+      ],
+      "dependencies": [],
+      "functions": [],
+      "classes": [],
+      "constants": []
+    },
+    "src/ts/handlebar-helpers.ts": {
+      "imports": [],
+      "dependencies": [],
+      "functions": [],
+      "classes": [
+        {
+          "name": "HandlebarHelpers",
+          "isExported": false,
+          "methods": [
+            {
+              "name": "register",
+              "params": [],
+              "isAsync": false,
+              "returnType": "void"
+            }
+          ],
+          "properties": []
+        }
+      ],
+      "constants": []
+    },
+    "src/ts/hooks/actor-ready.ts": {
+      "imports": [
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "../settings.ts",
+          "kind": "import",
+          "imported": [
+            "Settings"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts",
+        "src/ts/settings.ts"
+      ],
+      "functions": [
+        {
+          "name": "initializeFortune",
+          "params": [
+            {
+              "name": "actor",
+              "type": "Actor"
+            }
+          ],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "void"
+        }
+      ],
+      "classes": [],
+      "constants": [
+        {
+          "name": "ActorReady",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/index.ts": {
+      "imports": [
+        {
+          "from": "./actor-ready.ts",
+          "kind": "import",
+          "imported": [
+            "ActorReady"
+          ]
+        },
+        {
+          "from": "./init.ts",
+          "kind": "import",
+          "imported": [
+            "Init"
+          ]
+        },
+        {
+          "from": "./pre-create-chat-message.ts",
+          "kind": "import",
+          "imported": [
+            "PreCreateChatMessage"
+          ]
+        },
+        {
+          "from": "./pre-skill-roll.ts",
+          "kind": "import",
+          "imported": [
+            "PreSkillRoll"
+          ]
+        },
+        {
+          "from": "./pre-skill-roll-config.ts",
+          "kind": "import",
+          "imported": [
+            "PreSkillRollConfig"
+          ]
+        },
+        {
+          "from": "./render-actor-sheet.ts",
+          "kind": "import",
+          "imported": [
+            "RenderActorSheet"
+          ]
+        },
+        {
+          "from": "./render-roll-dialog.ts",
+          "kind": "import",
+          "imported": [
+            "RenderRollDialog"
+          ]
+        },
+        {
+          "from": "./rest.ts",
+          "kind": "import",
+          "imported": [
+            "Rest"
+          ]
+        },
+        {
+          "from": "./setup.ts",
+          "kind": "import",
+          "imported": [
+            "Setup"
+          ]
+        },
+        {
+          "from": "./skill-roll.ts",
+          "kind": "import",
+          "imported": [
+            "SkillRoll"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/actor-ready.ts",
+        "src/ts/hooks/init.ts",
+        "src/ts/hooks/pre-create-chat-message.ts",
+        "src/ts/hooks/pre-skill-roll-config.ts",
+        "src/ts/hooks/pre-skill-roll.ts",
+        "src/ts/hooks/render-actor-sheet.ts",
+        "src/ts/hooks/render-roll-dialog.ts",
+        "src/ts/hooks/rest.ts",
+        "src/ts/hooks/setup.ts",
+        "src/ts/hooks/skill-roll.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "HooksModule",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/init.ts": {
+      "imports": [
+        {
+          "from": "../api.ts",
+          "kind": "import",
+          "imported": [
+            "ThisModule"
+          ]
+        },
+        {
+          "from": "../constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "../fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        },
+        {
+          "from": "../handlebar-helpers.ts",
+          "kind": "import",
+          "imported": [
+            "HandlebarHelpers"
+          ]
+        },
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "../settings.ts",
+          "kind": "import",
+          "imported": [
+            "Settings"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/api.ts",
+        "src/ts/constants.ts",
+        "src/ts/fortune-manager.ts",
+        "src/ts/handlebar-helpers.ts",
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts",
+        "src/ts/settings.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "Init",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/pre-create-chat-message.ts": {
+      "imports": [
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "PreCreateChatMessage",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/pre-skill-roll-config.ts": {
+      "imports": [
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "PreSkillRollConfig",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/pre-skill-roll.ts": {
+      "imports": [
+        {
+          "from": "../fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        },
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/fortune-manager.ts",
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "PreSkillRoll",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/render-actor-sheet.ts": {
+      "imports": [
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "RenderActorSheet",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/render-roll-dialog.ts": {
+      "imports": [
+        {
+          "from": "../fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        },
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/fortune-manager.ts",
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [
+        {
+          "name": "attachEventHandlers",
+          "params": [
+            {
+              "name": "html",
+              "type": "JQuery"
+            },
+            {
+              "name": "actor",
+              "type": "Actor"
+            },
+            {
+              "name": "app",
+              "type": "any"
+            }
+          ],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "void"
+        }
+      ],
+      "classes": [],
+      "constants": [
+        {
+          "name": "RenderRollDialog",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/rest.ts": {
+      "imports": [
+        {
+          "from": "../fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        },
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/fortune-manager.ts",
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "Rest",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/setup.ts": {
+      "imports": [
+        {
+          "from": "@client/appv1/api/application-v1.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@client/canvas/placeables/token.d.mts",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "@static/lib/shim.ts",
+          "kind": "import",
+          "imported": [
+            "libWrapper"
+          ]
+        },
+        {
+          "from": "../constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts",
+        "src/ts/hooks/index.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "Setup",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/hooks/skill-roll.ts": {
+      "imports": [
+        {
+          "from": "../fortune-manager.ts",
+          "kind": "import",
+          "imported": [
+            "FortuneManager"
+          ]
+        },
+        {
+          "from": "../logger.ts",
+          "kind": "import",
+          "imported": [
+            "Logger"
+          ]
+        },
+        {
+          "from": "./index.ts",
+          "kind": "import",
+          "imported": [
+            "Listener"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/fortune-manager.ts",
+        "src/ts/hooks/index.ts",
+        "src/ts/logger.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "SkillRoll",
+          "initKind": "object",
+          "isExported": false,
+          "type": "Listener"
+        }
+      ]
+    },
+    "src/ts/logger.ts": {
+      "imports": [
+        {
+          "from": "./constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts"
+      ],
+      "functions": [],
+      "classes": [
+        {
+          "name": "Logger",
+          "isExported": true,
+          "methods": [
+            {
+              "name": "log",
+              "params": [
+                {
+                  "name": "args",
+                  "type": "unknown[]",
+                  "rest": true
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void",
+              "isStatic": true
+            },
+            {
+              "name": "warn",
+              "params": [
+                {
+                  "name": "args",
+                  "type": "unknown[]",
+                  "rest": true
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void",
+              "isStatic": true
+            },
+            {
+              "name": "error",
+              "params": [
+                {
+                  "name": "args",
+                  "type": "unknown[]",
+                  "rest": true
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void",
+              "isStatic": true
+            },
+            {
+              "name": "debug",
+              "params": [
+                {
+                  "name": "args",
+                  "type": "unknown[]",
+                  "rest": true
+                }
+              ],
+              "isAsync": false,
+              "returnType": "void",
+              "isStatic": true
+            }
+          ],
+          "properties": []
+        }
+      ],
+      "constants": []
+    },
+    "src/ts/module.ts": {
+      "imports": [
+        {
+          "from": "../styles/style.css",
+          "kind": "import"
+        },
+        {
+          "from": "./hooks/index.ts",
+          "kind": "import",
+          "imported": [
+            "HooksModule"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/hooks/index.ts"
+      ],
+      "functions": [],
+      "classes": [],
+      "constants": []
+    },
+    "src/ts/settings.ts": {
+      "imports": [
+        {
+          "from": "./constants.ts",
+          "kind": "import",
+          "imported": [
+            "MODULE_ID"
+          ]
+        },
+        {
+          "from": "./forms/refocus-outcomes-form.ts",
+          "kind": "import",
+          "imported": [
+            "RefocusOutcomesForm"
+          ]
+        },
+        {
+          "from": "./forms/tap-options-form.ts",
+          "kind": "import",
+          "imported": [
+            "TapOptionsForm"
+          ]
+        }
+      ],
+      "dependencies": [
+        "src/ts/constants.ts",
+        "src/ts/forms/refocus-outcomes-form.ts",
+        "src/ts/forms/tap-options-form.ts"
+      ],
+      "functions": [],
+      "classes": [
+        {
+          "name": "Settings",
+          "isExported": false,
+          "methods": [
+            {
+              "name": "register",
+              "params": [],
+              "isAsync": false,
+              "returnType": "void"
+            }
+          ],
+          "properties": []
+        }
+      ],
+      "constants": [
+        {
+          "name": "DEFAULT_TAP_OPTIONS",
+          "initKind": "array",
+          "isExported": false,
+          "type": "TapOption[]"
+        },
+        {
+          "name": "DEFAULT_REFOCUS_OUTCOMES",
+          "initKind": "array",
+          "isExported": false,
+          "type": "RefocusOutcome[]"
+        }
+      ]
+    },
+    "src/ts/types/fortune-data.ts": {
+      "imports": [],
+      "dependencies": [],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "DEFAULT_FORTUNE_DATA",
+          "initKind": "object",
+          "isExported": true,
+          "type": "FortuneData"
+        },
+        {
+          "name": "FORTUNE_TAP_OPTIONS",
+          "initKind": "array",
+          "isExported": true,
+          "type": "FortuneTapOption[]"
+        }
+      ]
+    },
+    "static/lib/shim.ts": {
+      "imports": [],
+      "dependencies": [],
+      "functions": [],
+      "classes": [],
+      "constants": [
+        {
+          "name": "libWrapper",
+          "initKind": "unknown",
+          "isExported": true,
+          "type": "LibWrapper"
+        },
+        {
+          "name": "VERSIONS",
+          "initKind": "array",
+          "isExported": true
+        },
+        {
+          "name": "TGT_SPLIT_RE",
+          "initKind": "unknown",
+          "isExported": true
+        },
+        {
+          "name": "TGT_CLEANUP_RE",
+          "initKind": "unknown",
+          "isExported": true
+        }
+      ]
+    },
+    "types/libWrapper/index.d.ts": {
+      "imports": [],
+      "dependencies": [],
+      "functions": [],
+      "classes": [],
+      "constants": []
+    },
+    "vite.config.ts": {
+      "imports": [
+        {
+          "from": "node:fs",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "node:path",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "esbuild",
+          "kind": "import",
+          "isDefault": true
+        },
+        {
+          "from": "vite",
+          "kind": "import",
+          "isNamespace": true
+        },
+        {
+          "from": "vite-plugin-static-copy",
+          "kind": "import",
+          "imported": [
+            "viteStaticCopy"
+          ]
+        },
+        {
+          "from": "vite-tsconfig-paths",
+          "kind": "import",
+          "isDefault": true
+        }
+      ],
+      "dependencies": [],
+      "functions": [
+        {
+          "name": "minifyPlugin",
+          "params": [],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "Vite.Plugin"
+        },
+        {
+          "name": "deleteLockFilePlugin",
+          "params": [],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "Vite.Plugin"
+        },
+        {
+          "name": "handleHotUpdateForEnLang",
+          "params": [
+            {
+              "name": "outDir",
+              "type": "string"
+            }
+          ],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "Vite.Plugin"
+        },
+        {
+          "name": "handleHotUpdateForHandlebars",
+          "params": [
+            {
+              "name": "outDir",
+              "type": "string"
+            }
+          ],
+          "isAsync": false,
+          "isExported": false,
+          "returnType": "Vite.Plugin"
+        }
+      ],
+      "classes": [],
+      "constants": [
+        {
+          "name": "PACKAGE_ID",
+          "initKind": "literal",
+          "isExported": false
+        },
+        {
+          "name": "config",
+          "initKind": "unknown",
+          "isExported": false
+        }
+      ]
+    }
+  }
+}
