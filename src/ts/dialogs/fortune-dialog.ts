@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noStaticOnlyClass: <explanation> */
 import { FortuneManager } from "../fortune-manager.ts";
 
 export class FortuneDialog {
@@ -57,7 +58,6 @@ export class FortuneDialog {
                 html.find(".fortune-tap-btn").on("click", async function () {
                     const $btn = $(this);
                     const cost = parseInt($btn.data("cost"), 10);
-                    const effect = $btn.data("effect");
                     const label = $btn.find(".option-label").text();
 
                     const success = await FortuneManager.tapFortune(
