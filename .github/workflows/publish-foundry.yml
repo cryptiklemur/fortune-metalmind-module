@@ -1,0 +1,19 @@
+name: Publish to Foundry VTT
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish to Foundry VTT
+        env:
+          FVTT_PACKAGE_RELEASE_TOKEN: ${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}
+        run: |
+          npx @ghost-fvtt/foundry-publish \
+            --verifiedCoreVersion=13.350 \
+            --manifestURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/download/${{ github.event.release.tag_name }}/module.json \
+            --changelogURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/tag/${{ github.event.release.tag_name }}

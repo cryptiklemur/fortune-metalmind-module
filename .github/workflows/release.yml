@@ -33,12 +33,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
-
-      - name: Publish to Foundry VTT
-        if: success()
-        env:
-          FVTT_PACKAGE_RELEASE_TOKEN: ${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}
-        run: |
-          npx @ghost-fvtt/foundry-publish \
-            --manifestURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/latest/download/module.json \
-            --changelogURL https://github.com/cryptiklemur/fortune-metalmind-module/releases
