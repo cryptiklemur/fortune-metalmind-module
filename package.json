@@ -1,6 +1,6 @@
 {
   "name": "fortune-metalmind",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Adds Chromium Metalmind (Fortune) mechanics to the Cosmere RPG system",
   "private": true,
   "type": "module",
