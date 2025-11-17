@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Publish to Foundry VTT
         env:
+          FVTT_TOKEN: ${{ secrets.FVTT_TOKEN }}
           FVTT_PACKAGE_RELEASE_TOKEN: ${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}
         run: |
           npx @ghost-fvtt/foundry-publish \
