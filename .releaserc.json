@@ -46,7 +46,7 @@
         [
             "@semantic-release/exec",
             {
-                "publishCmd": "npx @ghost-fvtt/foundry-publish@4.0.0 --manifestURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/download/v${nextRelease.version}/module.json --changelogURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/tag/v${nextRelease.version}"
+                "publishCmd": "npx @ghost-fvtt/foundry-publish@4.0.0 --manifestPath dist/module.json --manifestURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/download/v${nextRelease.version}/module.json --changelogURL https://github.com/cryptiklemur/fortune-metalmind-module/releases/tag/v${nextRelease.version}"
             }
         ]
     ]
