@@ -28,12 +28,11 @@
             "@common/*": ["./types/foundry/common/*"],
             "@client/*": ["./types/foundry/client/*"]
         },
-        "types": ["jest", "jquery", "node"],
+        "types": ["jquery", "node"],
         "typeRoots": ["./node_modules/@types", "./types/foundry"]
     },
     "include": [
         "./src/**/*",
-        "./tests/**/*.ts",
         "./types/foundry/global-external.d.mts",
         "./types/libWrapper/index.d.ts",
         "./vite.config.ts"
