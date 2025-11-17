@@ -1,12 +1,8 @@
 /** biome-ignore-all lint/complexity/noStaticOnlyClass: Fine here */
-import { MODULE_ID } from "./constants.ts";
-import { Logger } from "./logger.ts";
-import { Settings } from "./settings.ts";
-import {
-    DEFAULT_FORTUNE_DATA,
-    type FortuneData,
-    type FortuneTapCost,
-} from "./types/fortune-data.ts";
+import {MODULE_ID} from "./constants.ts";
+import {Logger} from "./logger.ts";
+import {Settings} from "./settings.ts";
+import {DEFAULT_FORTUNE_DATA, type FortuneData, type FortuneTapCost,} from "./types/fortune-data.ts";
 
 export class FortuneManager {
     static readonly FLAG_KEY = "fortuneData";
@@ -18,7 +14,9 @@ export class FortuneManager {
 
         const result: FortuneData = {
             current: systemResources.value ?? FortuneManager.settings.startingFortune,
-            max: systemResources.max?.value ?? FortuneManager.settings.maximumFortune,
+          max: systemResources.max?.useOverride
+            ? FortuneManager.settings.maximumFortune
+            : (systemResources.max?.value ?? 0),
             tapAvailable: flagData?.tapAvailable ?? DEFAULT_FORTUNE_DATA.tapAvailable,
             conversionsRemaining: flagData?.conversionsRemaining ?? FortuneManager.settings.opportunityConversionsPerRest,
             conversionsMax: FortuneManager.settings.opportunityConversionsPerRest,
