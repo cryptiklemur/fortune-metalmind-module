@@ -32,5 +32,6 @@ jobs:
       - name: Release
         env:
           FVTT_TOKEN: ${{ secrets.FVTT_TOKEN }}
+          FVTT_PACKAGE_RELEASE_TOKEN: ${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
