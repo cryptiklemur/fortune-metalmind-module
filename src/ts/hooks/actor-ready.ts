@@ -12,40 +12,59 @@ const ActorReady: Listener = {
             }
         });
 
-        Hooks.on("createActor", (actor: unknown) => {
-            initializeFortune(actor as Actor);
+        Hooks.on("preCreateActor", (actor: unknown) => {
+            const typed = actor as Actor;
+
+            if (!needsFortune(typed)) return;
+
+            (typed as any).updateSource(startingFortuneSource());
+            Logger.log("Initialized Fortune on new actor", {
+                actorName: typed.name,
+            });
         });
     },
 };
 
-function initializeFortune(actor: Actor): void {
+function needsFortune(actor: Actor): boolean {
     const system = (actor as any).system;
-    const settings = new Settings();
 
     if (!system?.resources) {
         Logger.warn("Actor has no resources object", { actorName: actor.name });
-        return;
+        return false;
     }
 
-    if (!system.resources.for) {
-        const startingFortune = settings.startingFortune;
-        const maximumFortune = settings.maximumFortune;
+    return !system.resources.for?.max?.useOverride;
+}
 
-        const updates = {
-            "system.resources.for": {
-                value: startingFortune,
-                max: {
-                    value: maximumFortune,
-                    useOverride: true,
-                    override: maximumFortune,
-                },
-            },
-        };
+function startingFortuneSource(): Record<string, unknown> {
+    const settings = new Settings();
 
-        actor.update(updates).then(() => {
-            Logger.log("Initialized Fortune on actor", { actorName: actor.name });
-        }).catch((error) => {
-            Logger.error("Failed to initialize Fortune", { actorName: actor.name, error });
+    return {
+        "system.resources.for.value": settings.startingFortune,
+        "system.resources.for.max.useOverride": true,
+        "system.resources.for.max.override": settings.maximumFortune,
+    };
+}
+
+async function initializeFortune(actor: Actor): Promise<void> {
+    if (!needsFortune(actor)) return;
+
+    const settings = new Settings();
+
+    try {
+        await actor.update({
+            "system.resources.for.max.useOverride": true,
+            "system.resources.for.max.override": settings.maximumFortune,
+        });
+        await actor.update({
+            "system.resources.for.value": settings.startingFortune,
+        });
+
+        Logger.log("Initialized Fortune on actor", { actorName: actor.name });
+    } catch (error) {
+        Logger.error("Failed to initialize Fortune", {
+            actorName: actor.name,
+            error,
         });
     }
 }

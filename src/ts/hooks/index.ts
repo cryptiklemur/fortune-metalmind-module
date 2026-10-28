@@ -10,7 +10,13 @@ interface Listener {
 
 const HooksModule: Listener = {
     listen(): void {
-        const listeners: Listener[] = [Init, Setup, ActorReady, RenderActorSheet, Rest];
+        const listeners: Listener[] = [
+            Init,
+            Setup,
+            ActorReady,
+            RenderActorSheet,
+            Rest,
+        ];
 
         for (const listener of listeners) {
             listener.listen();

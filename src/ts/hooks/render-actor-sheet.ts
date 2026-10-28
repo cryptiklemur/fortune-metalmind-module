@@ -12,10 +12,17 @@ const RenderActorSheet: Listener = {
                 if (!actor) return;
 
                 const $sheet = $(html as HTMLElement);
-                const $fortuneControls = $sheet.find('.resource.for[data-id="for"] .controls');
+                const $fortuneControls = $sheet.find(
+                    '.resource.for[data-id="for"] .controls',
+                );
 
-                if ($fortuneControls.length > 0 && $fortuneControls.find('.fortune-action-btn').length === 0) {
-                    const $fortuneBtn = $('<a role="button" class="fortune-action-btn" data-tooltip="Tap/Store Fortune"><i class="fa-solid fa-coins"></i></a>');
+                if (
+                    $fortuneControls.length > 0 &&
+                    $fortuneControls.find(".fortune-action-btn").length === 0
+                ) {
+                    const $fortuneBtn = $(
+                        '<a role="button" class="fortune-action-btn" data-tooltip="Tap/Store Fortune"><i class="fa-solid fa-coins"></i></a>',
+                    );
 
                     $fortuneControls.prepend($fortuneBtn);
 

@@ -27,7 +27,8 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
         return foundry.utils.mergeObject(super.defaultOptions, {
             id: "fortune-tap-options",
             title: "Configure Fortune Tap Options",
-            template: "modules/fortune-metalmind/templates/tap-options-form.hbs",
+            template:
+                "modules/fortune-metalmind/templates/tap-options-form.hbs",
             width: 700,
             height: "auto",
             closeOnSubmit: true,
@@ -42,8 +43,12 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
         html.find(".effect-select").on("change", (event) => {
             const index = $(event.currentTarget).data("index");
             const value = $(event.currentTarget).val() as string;
-            const $macroField = html.find(`[data-custom-type="macro"][data-custom-index="${index}"]`);
-            const $scriptField = html.find(`[data-custom-type="script"][data-custom-index="${index}"]`);
+            const $macroField = html.find(
+                `[data-custom-type="macro"][data-custom-index="${index}"]`,
+            );
+            const $scriptField = html.find(
+                `[data-custom-type="script"][data-custom-index="${index}"]`,
+            );
 
             if (value === "custom-macro") {
                 $macroField.removeClass("hidden");
@@ -58,7 +63,10 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
         });
 
         html.find(".add-option").on("click", async () => {
-            const setting = game.settings.get(MODULE_ID, "tapOptions") as string;
+            const setting = game.settings.get(
+                MODULE_ID,
+                "tapOptions",
+            ) as string;
             let options: TapOption[] = [];
 
             try {
@@ -75,13 +83,20 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
             };
 
             options.push(newOption);
-            await game.settings.set(MODULE_ID, "tapOptions", JSON.stringify(options, null, 2));
+            await game.settings.set(
+                MODULE_ID,
+                "tapOptions",
+                JSON.stringify(options, null, 2),
+            );
             this.render();
         });
 
         html.find(".remove-option").on("click", async (event) => {
             const index = $(event.currentTarget).data("index");
-            const setting = game.settings.get(MODULE_ID, "tapOptions") as string;
+            const setting = game.settings.get(
+                MODULE_ID,
+                "tapOptions",
+            ) as string;
             let options: TapOption[] = [];
 
             try {
@@ -91,18 +106,27 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
             }
 
             options.splice(index, 1);
-            await game.settings.set(MODULE_ID, "tapOptions", JSON.stringify(options, null, 2));
+            await game.settings.set(
+                MODULE_ID,
+                "tapOptions",
+                JSON.stringify(options, null, 2),
+            );
             this.render();
         });
 
         html.find("button[name='reset']").on("click", async () => {
             const confirm = await (globalThis as any).Dialog.confirm({
                 title: "Reset to Defaults",
-                content: "<p>Are you sure you want to reset Fortune Tap Options to defaults?</p>",
+                content:
+                    "<p>Are you sure you want to reset Fortune Tap Options to defaults?</p>",
             });
 
             if (confirm) {
-                await game.settings.set(MODULE_ID, "tapOptions", JSON.stringify(DEFAULT_TAP_OPTIONS, null, 2));
+                await game.settings.set(
+                    MODULE_ID,
+                    "tapOptions",
+                    JSON.stringify(DEFAULT_TAP_OPTIONS, null, 2),
+                );
                 this.render();
             }
         });
@@ -155,7 +179,11 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
             }
         }
 
-        await game.settings.set(MODULE_ID, "tapOptions", JSON.stringify(options, null, 2));
+        await game.settings.set(
+            MODULE_ID,
+            "tapOptions",
+            JSON.stringify(options, null, 2),
+        );
         ui.notifications?.info("Fortune Tap Options saved!");
     }
 }

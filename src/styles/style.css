@@ -3,12 +3,22 @@
     --cosmere-color-fortune-fill: #8e9aaf;
 }
 
-.resource.for[data-id="for"] .background {
-    background-color: var(--cosmere-color-fortune-back) !important;
+.application.sheet.actor
+    app-actor-resource
+    .resource.for
+    .bar
+    .container
+    .background {
+    background-color: var(--cosmere-color-fortune-back);
 }
 
-.resource.for[data-id="for"] .inner-bar {
-    background-color: var(--cosmere-color-fortune-fill) !important;
+.application.sheet.actor
+    app-actor-resource
+    .resource.for
+    .bar
+    .container
+    .inner-bar {
+    background-color: var(--cosmere-color-fortune-fill);
 }
 
 .fortune-resource {
@@ -105,7 +115,7 @@
 }
 
 .tap-option-card .custom-field textarea {
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
     font-size: 12px;
     line-height: 1.4;
 }
@@ -326,4 +336,3 @@
     color: #666;
     font-size: 0.85em;
 }
-
