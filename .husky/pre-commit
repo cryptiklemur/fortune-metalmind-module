@@ -1,1 +1,12 @@
 npm run build
+
+hooks="$(git config --global core.hooksPath)"
+
+[ -z "$hooks" ] && exit 0
+
+if [ ! -x "$hooks/pre-commit" ]; then
+    echo "pre-commit: $hooks/pre-commit is not executable, so nothing screened this commit" >&2
+    exit 1
+fi
+
+exec "$hooks/pre-commit" "$@"

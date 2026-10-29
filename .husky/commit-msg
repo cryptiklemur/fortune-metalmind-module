@@ -1,0 +1,10 @@
+hooks="$(git config --global core.hooksPath)"
+
+[ -z "$hooks" ] && exit 0
+
+if [ ! -x "$hooks/commit-msg" ]; then
+    echo "commit-msg: $hooks/commit-msg is not executable, so nothing gated this commit" >&2
+    exit 1
+fi
+
+exec "$hooks/commit-msg" "$@"
