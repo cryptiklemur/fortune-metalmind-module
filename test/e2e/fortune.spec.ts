@@ -55,4 +55,24 @@ test.describe("fortune on a character sheet", () => {
             bar(settings.start, settings.max),
         );
     });
+
+    test("rolls a re-connect and closes the dialog", async ({
+        page,
+        character,
+    }) => {
+        await character.fortuneButton.click();
+        await page.locator(".fortune-reconnect-btn").click();
+
+        await expect(page.locator(".application.dialog")).toHaveCount(0);
+
+        const rolled = await page.evaluate(
+            (id) =>
+                globalThis.game.messages.contents.some(
+                    (message: { speaker?: { actor?: string } }) =>
+                        message.speaker?.actor === id,
+                ),
+            character.id,
+        );
+        expect(rolled).toBe(true);
+    });
 });

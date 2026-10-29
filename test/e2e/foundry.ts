@@ -165,6 +165,13 @@ export const test = base.extend<
             fortuneButton: sheet.locator(".fortune-action-btn"),
         });
 
+        await world.evaluate(async () => {
+            const { DialogV2 } = globalThis.foundry.applications.api;
+            for (const app of globalThis.foundry.applications.instances.values()) {
+                if (app instanceof DialogV2) await app.close();
+            }
+        });
+
         await world.evaluate(async (actorId) => {
             const actor = globalThis.game.actors.get(actorId);
             await actor?.sheet.close();
