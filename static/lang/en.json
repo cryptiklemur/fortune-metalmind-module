@@ -17,19 +17,7 @@
         },
         "Tap": {
             "Title": "Tap Fortune",
-            "SelectOption": "Select Fortune Tap",
-            "Advantage": {
-                "Label": "Gain Advantage",
-                "Description": "Gain advantage on your next roll"
-            },
-            "AutoSuccess": {
-                "Label": "Auto-Success",
-                "Description": "Automatically succeed on your next roll (DM discretion)"
-            },
-            "GuaranteedNat20": {
-                "Label": "Guaranteed Natural 20",
-                "Description": "Roll a guaranteed natural 20"
-            }
+            "SelectOption": "Select Fortune Tap"
         },
         "Refocus": {
             "Title": "Re-Connecting",
@@ -47,11 +35,6 @@
             "Decline": "Keep Opportunity",
             "Success": "Opportunity converted to Fortune! Current: {current}/{max}",
             "Description": "You have the option to convert this Opportunity into Fortune."
-        },
-        "LongRest": {
-            "Button": "Complete Long Rest",
-            "Confirmation": "Complete Long Rest and reset Fortune abilities?",
-            "Complete": "Long Rest completed. Fortune abilities restored."
         },
         "ChatFlavor": {
             "TapFortune": "{actor} touches their chromium medallion..."
@@ -115,9 +98,6 @@
                 "Name": "Auto-Detect Long Rests",
                 "Hint": "Automatically restore Fortune abilities when the Cosmere RPG long rest is completed"
             }
-        },
-        "Errors": {
-            "Generic": "An error occurred in Fortune Metalmind ({context}). Check console for details."
         },
         "Forms": {
             "ResetToDefaults": "Reset to Defaults",

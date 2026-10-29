@@ -1,7 +1,4 @@
-import { expect, test } from "./foundry.ts";
-
-const bar = (current: number, max: number) =>
-    new RegExp(`^\\s*${current}\\s*/\\s*${max}\\s*$`);
+import { bar, expect, test } from "./foundry.ts";
 
 const visibleName = (raw: string | null) =>
     (raw ?? "").replace(/[​⁠]/g, "").trim();
@@ -253,6 +250,7 @@ test.describe("fortune rows on the cosmere actions tab", () => {
     test("spends fortune once when a tap row is double clicked", async ({
         character,
         page,
+        settings,
     }) => {
         await character.openActionsTab();
 
@@ -264,12 +262,12 @@ test.describe("fortune rows on the cosmere actions tab", () => {
             character.id,
         );
 
-        const row = character.sheet.locator(
-            `[data-section-id="fortune"] [data-item-id="${TAP_ROW}"] [data-action="use-item"]`,
-        );
+        const row = character.rowUseButton(TAP_ROW);
         await Promise.all([row.click(), row.click()]);
 
-        await expect(character.fortuneBar).toHaveText(bar(0, 5));
+        await expect(character.fortuneBar).toHaveText(
+            bar(settings.start - 1, settings.max),
+        );
 
         const after = await page.evaluate(
             (actorId) =>

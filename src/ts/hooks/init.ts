@@ -24,7 +24,7 @@ const Init: Listener = {
             } else {
                 (globalThis as any).CONFIG.COSMERE.resources.for = {
                     key: "for",
-                    label: "Fortune",
+                    label: "COSMERE.Actor.Resource.Fortune",
                     modes: {
                         character: { default: "override", valid: ["override"] },
                     },

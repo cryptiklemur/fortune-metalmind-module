@@ -41,7 +41,6 @@ export class FortuneManager {
                 DEFAULT_FORTUNE_DATA.refocusAvailable,
         };
 
-        Logger.debug("getFortuneData", { actorName: actor.name, data: result });
         return result;
     }
 

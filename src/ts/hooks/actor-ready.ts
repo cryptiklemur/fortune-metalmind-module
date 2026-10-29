@@ -1,5 +1,5 @@
+import { FortuneManager } from "../fortune-manager.ts";
 import { Logger } from "../logger.ts";
-import { Settings } from "../settings.ts";
 import type { Listener } from "./index.ts";
 
 const staleAdversaries: string[] = [];
@@ -47,27 +47,26 @@ function needsFortune(actor: Actor): boolean {
 }
 
 function startingFortuneSource(): Record<string, unknown> {
-    const settings = new Settings();
-
     return {
-        "system.resources.for.value": settings.startingFortune,
+        "system.resources.for.value": FortuneManager.settings.startingFortune,
         "system.resources.for.max.useOverride": true,
-        "system.resources.for.max.override": settings.maximumFortune,
+        "system.resources.for.max.override":
+            FortuneManager.settings.maximumFortune,
     };
 }
 
 async function initializeFortune(actor: Actor): Promise<void> {
     if (!needsFortune(actor)) return;
 
-    const settings = new Settings();
-
     try {
         await actor.update({
             "system.resources.for.max.useOverride": true,
-            "system.resources.for.max.override": settings.maximumFortune,
+            "system.resources.for.max.override":
+                FortuneManager.settings.maximumFortune,
         });
         await actor.update({
-            "system.resources.for.value": settings.startingFortune,
+            "system.resources.for.value":
+                FortuneManager.settings.startingFortune,
         });
 
         Logger.log("Initialized Fortune on actor", { actorName: actor.name });

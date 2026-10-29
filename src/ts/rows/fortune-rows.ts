@@ -1,6 +1,6 @@
 import { MODULE_ID } from "../constants.ts";
+import { FortuneManager } from "../fortune-manager.ts";
 import { Logger } from "../logger.ts";
-import { Settings } from "../settings.ts";
 
 type FortuneRowKind = "tap" | "store" | "reconnect";
 
@@ -26,8 +26,6 @@ const STORE_SORT_KEY = "⁠";
 const RECONNECT_SORT_KEY = "⁠⁠";
 const MAX_COST_SORT_STEPS = 50;
 
-const settings = new Settings();
-const generatedRowIds = new Set<string>();
 const reportedOrphans = new Set<string>();
 
 let resourceAsserted = false;
@@ -103,10 +101,6 @@ function injectRows(actor: any): void {
     const collection = actor.getEmbeddedCollection("Item");
     const rows = buildRows();
 
-    for (const data of rows) {
-        generatedRowIds.add(data._id);
-    }
-
     pruneRows(collection);
 
     for (const data of rows) {
@@ -116,22 +110,42 @@ function injectRows(actor: any): void {
     }
 }
 
-function isGeneratedRow(item: any): boolean {
-    return (
-        !!item?.getFlag?.(MODULE_ID, ROW_FLAG) && generatedRowIds.has(item.id)
+function hasRowFlag(item: any): boolean {
+    return !!item?.getFlag?.(MODULE_ID, ROW_FLAG);
+}
+
+function rowKind(item: any): FortuneRowKind | undefined {
+    return item?.getFlag?.(MODULE_ID, ROW_FLAG) as FortuneRowKind | undefined;
+}
+
+function rowCost(item: any): number {
+    return Number(item?.getFlag?.(MODULE_ID, COST_FLAG) ?? 0);
+}
+
+function rowLabel(item: any): string {
+    return String(item?.getFlag?.(MODULE_ID, LABEL_FLAG) ?? "");
+}
+
+function isPersisted(item: any): boolean {
+    return !!item?.parent?._source?.items?.some(
+        (data: any) => data._id === item.id,
     );
+}
+
+function isGeneratedRow(item: any): boolean {
+    return hasRowFlag(item) && !isPersisted(item);
 }
 
 function pruneRows(collection: any): void {
     for (const item of Array.from(collection) as any[]) {
-        if (!item.getFlag?.(MODULE_ID, ROW_FLAG)) continue;
+        if (!hasRowFlag(item)) continue;
 
-        if (generatedRowIds.has(item.id)) {
-            collection.delete(item.id, { modifySource: false });
+        if (isPersisted(item)) {
+            reportOrphanRow(item);
             continue;
         }
 
-        reportOrphanRow(item);
+        collection.delete(item.id, { modifySource: false });
     }
 }
 
@@ -158,7 +172,9 @@ function costSortKey(cost: number): string {
 function buildRows(): FortuneRowData[] {
     const tapPrefix = game.i18n.localize("FortuneMetalmind.Tap.Title");
 
-    const byCost = [...settings.tapOptions].sort((a, b) => a.cost - b.cost);
+    const byCost = [...FortuneManager.settings.tapOptions].sort(
+        (a, b) => a.cost - b.cost,
+    );
 
     const taps = byCost.map((option, index) => ({
         _id: rowId(`tap${index.toString().padStart(4, "0")}`),
@@ -247,26 +263,32 @@ function rowId(suffix: string): string {
 function assertFortuneResourceOnce(actor: any, row: any): void {
     if (resourceAsserted) return;
 
-    const consumption = row.system?.activation?.consumption ?? [];
+    const consume = row.system?.activation?.consumption?.[0];
 
-    for (const consume of consumption) {
-        if (consume.type !== "resource") continue;
+    if (consume?.type !== "resource") return;
 
-        resourceAsserted = true;
+    resourceAsserted = true;
 
-        if (consume.resource === FORTUNE_RESOURCE) continue;
+    if (consume.resource === FORTUNE_RESOURCE) return;
 
-        Logger.error(
-            "Fortune row consumption fell back to another resource - the cost column and any system-side deduction are wrong",
-            {
-                actorName: actor.name,
-                rowId: row.id,
-                rowName: row.name,
-                resource: consume.resource,
-            },
-        );
-    }
+    Logger.error(
+        "Fortune row consumption fell back to another resource - the cost column and any system-side deduction are wrong",
+        {
+            actorName: actor.name,
+            rowId: row.id,
+            rowName: row.name,
+            resource: consume.resource,
+        },
+    );
 }
 
-export { COST_FLAG, isGeneratedRow, LABEL_FLAG, registerFortuneRows, ROW_FLAG };
+export {
+    hasRowFlag,
+    isGeneratedRow,
+    registerFortuneRows,
+    rowCost,
+    rowKind,
+    rowLabel,
+    SECTION_ID,
+};
 export type { FortuneRowKind };

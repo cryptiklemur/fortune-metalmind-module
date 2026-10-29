@@ -1,12 +1,11 @@
-import { MODULE_ID } from "../constants.ts";
 import { FortuneManager } from "../fortune-manager.ts";
 import { Logger } from "../logger.ts";
 import {
-    COST_FLAG,
     type FortuneRowKind,
     isGeneratedRow,
-    LABEL_FLAG,
-    ROW_FLAG,
+    rowCost,
+    rowKind,
+    rowLabel,
 } from "../rows/fortune-rows.ts";
 import type { Listener } from "./index.ts";
 
@@ -18,8 +17,8 @@ async function announce(actor: any, content: string): Promise<void> {
 }
 
 async function tap(actor: any, item: any): Promise<void> {
-    const cost = Number(item.getFlag(MODULE_ID, COST_FLAG) ?? 0);
-    const label = item.getFlag(MODULE_ID, LABEL_FLAG);
+    const cost = rowCost(item);
+    const label = rowLabel(item);
 
     if (!(await FortuneManager.tapFortune(actor, cost))) return;
 
@@ -75,31 +74,25 @@ const UseItem: Listener = {
         Hooks.on("cosmere-rpg.preUseItem", (item: any) => {
             if (!isGeneratedRow(item)) return;
 
-            const kind = item.getFlag(MODULE_ID, ROW_FLAG) as FortuneRowKind;
+            const kind = rowKind(item);
 
-            if (item.actor) {
-                const key = `${item.actor.id}:${item.id}`;
+            if (!kind || !item.actor) return false;
 
-                if (inFlight.has(key)) {
-                    Logger.debug("Fortune row already running, click dropped", {
-                        key,
+            const key = `${item.actor.id}:${item.id}`;
+
+            if (inFlight.has(key)) return false;
+
+            inFlight.add(key);
+
+            run(item.actor, item, kind)
+                .catch((error: unknown) =>
+                    Logger.error("Fortune row action failed", {
+                        rowName: item.name,
                         kind,
-                    });
-                    return false;
-                }
-
-                inFlight.add(key);
-
-                run(item.actor, item, kind)
-                    .catch((error: unknown) =>
-                        Logger.error("Fortune row action failed", {
-                            rowName: item.name,
-                            kind,
-                            error,
-                        }),
-                    )
-                    .finally(() => inFlight.delete(key));
-            }
+                        error,
+                    }),
+                )
+                .finally(() => inFlight.delete(key));
 
             return false;
         });

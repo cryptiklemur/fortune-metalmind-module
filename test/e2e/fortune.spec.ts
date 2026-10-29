@@ -1,7 +1,4 @@
-import { expect, test } from "./foundry.ts";
-
-const bar = (current: number, max: number) =>
-    new RegExp(`^\\s*${current}\\s*/\\s*${max}\\s*$`);
+import { bar, expect, test } from "./foundry.ts";
 
 test.describe("fortune on a character sheet", () => {
     test("shows the fortune bar with the actor's starting value and maximum", async ({

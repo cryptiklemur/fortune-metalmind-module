@@ -1,38 +1,43 @@
-import { MODULE_ID } from "../constants.ts";
 import { FortuneManager } from "../fortune-manager.ts";
 import { Logger } from "../logger.ts";
-import { COST_FLAG, ROW_FLAG } from "../rows/fortune-rows.ts";
+import { rowCost, rowKind, SECTION_ID } from "../rows/fortune-rows.ts";
 import type { Listener } from "./index.ts";
 
 const UNUSABLE_CLASS = "fortune-row-unusable";
-const ROW_SELECTOR = '[data-section-id="fortune"] li.item[data-item-id]';
+const ROW_SELECTOR = `[data-section-id="${SECTION_ID}"] li.item[data-item-id]`;
 
-function isUsable(actor: Actor, kind: string, cost: unknown): boolean {
+function isUsable(data: any, kind: string, cost: number): boolean {
     switch (kind) {
         case "tap":
-            return FortuneManager.canTapFortune(actor, Number(cost) || 0)
-                .possible;
+            return data.tapAvailable && data.current >= cost;
         case "store":
-            return FortuneManager.canConvertOpportunity(actor).possible;
+            return data.conversionsRemaining > 0 && data.current < data.max;
         case "reconnect":
-            return FortuneManager.canPerformRefocus(actor).possible;
+            return data.refocusAvailable;
         default:
             return true;
     }
 }
 
 function greyRows(actor: Actor, root: HTMLElement): void {
-    const items = (actor as any).items;
+    if ((actor as any).type !== "character") return;
 
-    for (const row of root.querySelectorAll<HTMLElement>(ROW_SELECTOR)) {
+    const items = (actor as any).items;
+    const rows = root.querySelectorAll<HTMLElement>(ROW_SELECTOR);
+
+    if (rows.length === 0) return;
+
+    const data = FortuneManager.getFortuneData(actor as any);
+
+    for (const row of rows) {
         const item = items?.get(row.dataset.itemId);
-        const kind = item?.getFlag?.(MODULE_ID, ROW_FLAG);
+        const kind = rowKind(item);
 
         if (!kind) continue;
 
         row.classList.toggle(
             UNUSABLE_CLASS,
-            !isUsable(actor, kind, item.getFlag(MODULE_ID, COST_FLAG)),
+            !isUsable(data, kind, rowCost(item)),
         );
     }
 }

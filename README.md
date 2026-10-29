@@ -16,7 +16,7 @@ Fortune is a homebrew mechanic that represents a Chromium Metalmind - a metalmin
 
 ### Fortune Resource Integration
 
-- **Native Resource**: Fortune appears as a resource bar on character sheets with chrome/silver coloring
+- **Native Resource**: Fortune appears as a resource bar on character sheets, next to Health, Focus and Investiture
 - **Editable Values**: Players and GMs can adjust current and maximum Fortune values
 - **Persistent**: Fortune data is stored in actor system data and persists across sessions
 
@@ -37,7 +37,10 @@ or removes its row the next time the sheet refreshes.
 Fortune only appears on player character sheets. Adversaries get no Fortune rows and no Fortune
 resource bar.
 
-All actions post to chat for transparency.
+Every row posts a chat message, so the table can see Fortune being spent.
+
+Tapping Fortune costs the points and announces what the player bought. The module does not apply
+the advantage, the automatic success or the natural 20 to a roll. The GM adjudicates the result.
 
 ### Long Rest Integration
 
@@ -60,12 +63,13 @@ Highly configurable settings accessible through Foundry's module settings:
 ### Advanced Configuration
 
 - **Tap Options Editor**: Visual form to configure what players can spend Fortune on
-  - Default options: Advantage (1 Fortune), Auto-Success (2 Fortune), Guaranteed Nat20 (5 Fortune)
-  - Support for custom macros and JavaScript scripts
-  - Add/remove options as needed
-  - A label that already ends in a trailing price, such as `Advantage (1 Fortune)`, still works.
-    The module strips that suffix when it reads the label, so an older world's tap options keep
-    showing a clean name on the row.
+  - Default options: Gain Advantage (1), Auto-Success (2), Guaranteed Natural 20 (5)
+  - Add and remove options as needed. Each one becomes its own row.
+  - A label that already ends in a trailing price, such as `Gain Advantage (1 Fortune)`, still
+    works. The module strips that suffix when it reads the label, so an older world's tap options
+    keep showing a clean name on the row.
+  - The form also stores a custom macro or script per option. Nothing runs them yet. See
+    [Future Plans](#future-plans).
 
 - **Refocus Outcomes Editor**: Configure the results of Refocus meditation based on d20 rolls
   - Default: 1-5 (lose 1 Fortune), 6-19 (regain tap), 20 (regain tap + gain 2 Fortune)
@@ -73,18 +77,18 @@ Highly configurable settings accessible through Foundry's module settings:
 
 ## Future Plans
 
-### Roll Integration (Pending)
+### Roll Integration
 
-The module includes prepared (but currently disabled) Fortune tap mechanics that will integrate with the Cosmere RPG roll system once the system's roll workflow is refactored by the Metalworks team.
+Tapping Fortune is descriptive today. The module spends the points and posts a chat message, and
+the GM applies the result. Making a tap change a roll means hooking the Cosmere RPG roll workflow,
+which the Metalworks team is still redesigning.
 
-**Planned Features**:
-- Fortune tap UI injected into roll configuration dialogs
-- Spend Fortune to gain advantages on skill checks
-- Automatic success without rolling
-- Guaranteed natural 20 results
-- Custom macro/script execution on Fortune tap
+**Planned**:
+- A Fortune tap control inside roll configuration dialogs
+- Advantage, automatic success and guaranteed natural 20 applied to the roll itself
+- Running the custom macro or script a tap option stores
 
-**Status**: Waiting for the Metalworks team to complete their roll system redesign before implementing roll integration.
+**Status**: Waiting on the Metalworks roll system redesign.
 
 ### Automatic Opportunity Detection
 
@@ -96,12 +100,12 @@ The module includes prepared (but currently disabled) Fortune tap mechanics that
 1. Install from Foundry's module browser, or
 2. Use the manifest URL from the latest release
 3. Enable the module in your Cosmere RPG game
-4. Fortune will automatically be added to all character sheets
+4. Fortune appears on every character sheet in the world
 
 ## Compatibility
 
-- **Foundry VTT**: v13
-- **Cosmere RPG System**: Required
+- **Foundry VTT**: 13.350 or later. Verified on 13.351.
+- **Cosmere RPG System**: 2.0.0 or later. Verified on 3.1.2.
 
 ## API
 
