@@ -3,6 +3,9 @@ import { expect, test } from "./foundry.ts";
 const bar = (current: number, max: number) =>
     new RegExp(`^\\s*${current}\\s*/\\s*${max}\\s*$`);
 
+const visibleName = (raw: string | null) =>
+    (raw ?? "").replace(/[​⁠]/g, "").trim();
+
 const TAP_ROW = "fmfortunetap0000";
 const EXPENSIVE_TAP_ROW = "fmfortunetap0002";
 const STORE_ROW = "fmfortunestore00";
@@ -183,8 +186,27 @@ test.describe("fortune rows on the cosmere actions tab", () => {
 
         await tapOptionsControl.set(options);
 
-        await expect(
-            character.sheet.locator(`[data-item-id="${TAP_ROW}"] .name`),
-        ).toHaveText("Tap Fortune: Gain Advantage");
+        const name = await character.sheet
+            .locator(`[data-item-id="${TAP_ROW}"] .name`)
+            .textContent();
+        expect(visibleName(name)).toBe("Tap Fortune: Gain Advantage");
+    });
+
+    test("orders the rows by tap cost, then Store Fortune, then Re-Connect", async ({
+        character,
+    }) => {
+        await character.openActionsTab();
+
+        const rendered = await character.fortuneRows
+            .locator(".name")
+            .allTextContents();
+
+        expect(rendered.map(visibleName)).toEqual([
+            "Tap Fortune: Gain Advantage",
+            "Tap Fortune: Auto-Success",
+            "Tap Fortune: Guaranteed Natural 20",
+            "Store Fortune",
+            "Re-Connect",
+        ]);
     });
 });

@@ -21,6 +21,10 @@ const LABEL_FLAG = "label";
 const FORTUNE_RESOURCE = "for";
 const FREE_ACTION = "fre";
 const SPECIAL_ACTION = "spe";
+const TAP_SORT_CHAR = "​";
+const STORE_SORT_KEY = "⁠";
+const RECONNECT_SORT_KEY = "⁠⁠";
+const MAX_COST_SORT_STEPS = 20;
 
 const settings = new Settings();
 
@@ -113,13 +117,18 @@ function pruneRows(collection: any): void {
     }
 }
 
+function costSortKey(cost: number): string {
+    const steps = Math.max(0, Math.min(Math.trunc(cost), MAX_COST_SORT_STEPS));
+    return TAP_SORT_CHAR.repeat(steps);
+}
+
 function buildRows(): FortuneRowData[] {
     const tapPrefix = game.i18n.localize("FortuneMetalmind.Tap.Title");
 
     const taps = settings.tapOptions.map((option, index) => ({
         _id: rowId(`tap${index.toString().padStart(4, "0")}`),
         type: "action" as const,
-        name: `${tapPrefix}: ${option.label}`,
+        name: `${tapPrefix}: ${costSortKey(option.cost)}${option.label}`,
         system: {
             description: { value: option.description },
             activation: {
@@ -146,7 +155,7 @@ function buildRows(): FortuneRowData[] {
         {
             _id: rowId("store"),
             type: "action" as const,
-            name: game.i18n.localize("FortuneMetalmind.Opportunity.Convert"),
+            name: `${STORE_SORT_KEY}${game.i18n.localize("FortuneMetalmind.Opportunity.Convert")}`,
             system: {
                 description: {
                     value: game.i18n.localize(
@@ -164,7 +173,7 @@ function buildRows(): FortuneRowData[] {
         {
             _id: rowId("recon"),
             type: "action" as const,
-            name: game.i18n.localize("FortuneMetalmind.Refocus.Button"),
+            name: `${RECONNECT_SORT_KEY}${game.i18n.localize("FortuneMetalmind.Refocus.Button")}`,
             system: {
                 description: {
                     value: game.i18n.localize(
