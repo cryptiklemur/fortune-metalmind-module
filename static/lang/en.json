@@ -19,15 +19,15 @@
             "Title": "Tap Fortune",
             "SelectOption": "Select Fortune Tap",
             "Advantage": {
-                "Label": "Gain Advantage (1 Fortune)",
+                "Label": "Gain Advantage",
                 "Description": "Gain advantage on your next roll"
             },
             "AutoSuccess": {
-                "Label": "Auto-Success (2 Fortune)",
+                "Label": "Auto-Success",
                 "Description": "Automatically succeed on your next roll (DM discretion)"
             },
             "GuaranteedNat20": {
-                "Label": "Guaranteed Natural 20 (5 Fortune)",
+                "Label": "Guaranteed Natural 20",
                 "Description": "Roll a guaranteed natural 20"
             }
         },

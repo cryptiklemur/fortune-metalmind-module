@@ -27,23 +27,25 @@ interface RefocusOutcome {
 const DEFAULT_TAP_OPTIONS: TapOption[] = [
     {
         cost: 1,
-        label: "Gain Advantage (1 Fortune)",
+        label: "Gain Advantage",
         description: "Gain advantage on your next roll",
         effect: "advantage",
     },
     {
         cost: 2,
-        label: "Auto-Success (2 Fortune)",
+        label: "Auto-Success",
         description: "Automatically succeed on your next roll (DM discretion)",
         effect: "auto-success",
     },
     {
         cost: 5,
-        label: "Guaranteed Natural 20 (5 Fortune)",
+        label: "Guaranteed Natural 20",
         description: "Roll a guaranteed natural 20",
         effect: "guaranteed-nat20",
     },
 ];
+
+const TRAILING_PRICE = /\s*\(\s*\d+\s*fortune\s*\)$/i;
 
 const DEFAULT_REFOCUS_OUTCOMES: RefocusOutcome[] = [
     {
@@ -240,11 +242,16 @@ class Settings {
 
     get tapOptions(): TapOption[] {
         const json = game.settings.get(MODULE_ID, this.#TAP_OPTIONS) as string;
+        let options: TapOption[];
         try {
-            return JSON.parse(json);
+            options = JSON.parse(json);
         } catch {
-            return DEFAULT_TAP_OPTIONS;
+            options = DEFAULT_TAP_OPTIONS;
         }
+        return options.map((option) => ({
+            ...option,
+            label: option.label.replace(TRAILING_PRICE, ""),
+        }));
     }
 
     get refocusOutcomes(): RefocusOutcome[] {
@@ -271,4 +278,4 @@ class Settings {
     }
 }
 
-export { Settings, type TapOption, type RefocusOutcome };
+export { Settings, DEFAULT_TAP_OPTIONS, type TapOption, type RefocusOutcome };

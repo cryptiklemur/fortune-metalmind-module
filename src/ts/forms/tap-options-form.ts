@@ -1,26 +1,5 @@
 import { MODULE_ID } from "../constants.ts";
-import type { TapOption } from "../settings.ts";
-
-const DEFAULT_TAP_OPTIONS: TapOption[] = [
-    {
-        cost: 1,
-        label: "Gain Advantage (1 Fortune)",
-        description: "Gain advantage on your next roll",
-        effect: "advantage",
-    },
-    {
-        cost: 2,
-        label: "Auto-Success (2 Fortune)",
-        description: "Automatically succeed on your next roll (DM discretion)",
-        effect: "auto-success",
-    },
-    {
-        cost: 5,
-        label: "Guaranteed Natural 20 (5 Fortune)",
-        description: "Roll a guaranteed natural 20",
-        effect: "guaranteed-nat20",
-    },
-];
+import { DEFAULT_TAP_OPTIONS, type TapOption } from "../settings.ts";
 
 export class TapOptionsForm extends (globalThis as any).FormApplication {
     static get defaultOptions(): any {

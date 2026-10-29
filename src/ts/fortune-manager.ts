@@ -8,6 +8,10 @@ import {
     type FortuneTapCost,
 } from "./types/fortune-data.ts";
 
+export type FortuneActionCheck =
+    | { possible: true }
+    | { possible: false; reasonKey: string };
+
 export class FortuneManager {
     static readonly FLAG_KEY = "fortuneData";
     static settings = new Settings();
@@ -97,34 +101,45 @@ export class FortuneManager {
         return true;
     }
 
+    static canTapFortune(
+        actor: Actor,
+        cost: FortuneTapCost,
+    ): FortuneActionCheck {
+        const data = FortuneManager.getFortuneData(actor);
+
+        if (!data.tapAvailable) {
+            return {
+                possible: false,
+                reasonKey: "FortuneMetalmind.Warnings.TapNotAvailable",
+            };
+        }
+
+        if (data.current < cost) {
+            return {
+                possible: false,
+                reasonKey: "FortuneMetalmind.Warnings.InsufficientFortune",
+            };
+        }
+
+        return { possible: true };
+    }
+
     static async tapFortune(
         actor: Actor,
         cost: FortuneTapCost,
     ): Promise<boolean> {
         Logger.log("tapFortune", { actorName: actor.name, cost });
         const data = FortuneManager.getFortuneData(actor);
+        const check = FortuneManager.canTapFortune(actor, cost);
 
-        if (!data.tapAvailable) {
-            Logger.warn("tapFortune failed: tap not available", {
-                actorName: actor.name,
-            });
-            ui.notifications.warn(
-                game.i18n.localize("FortuneMetalmind.Warnings.TapNotAvailable"),
-            );
-            return false;
-        }
-
-        if (data.current < cost) {
-            Logger.warn("tapFortune failed: insufficient fortune", {
+        if (!check.possible) {
+            Logger.warn("tapFortune failed", {
                 actorName: actor.name,
                 current: data.current,
                 cost,
+                reasonKey: check.reasonKey,
             });
-            ui.notifications.warn(
-                game.i18n.localize(
-                    "FortuneMetalmind.Warnings.InsufficientFortune",
-                ),
-            );
+            ui.notifications.warn(game.i18n.localize(check.reasonKey));
             return false;
         }
 
@@ -140,23 +155,33 @@ export class FortuneManager {
         return true;
     }
 
-    static async convertOpportunity(actor: Actor): Promise<boolean> {
+    static canConvertOpportunity(actor: Actor): FortuneActionCheck {
         const data = FortuneManager.getFortuneData(actor);
-        const fortuneGain = FortuneManager.settings.fortunePerOpportunity;
 
         if (data.conversionsRemaining <= 0) {
-            ui.notifications.warn(
-                game.i18n.localize(
-                    "FortuneMetalmind.Warnings.NoConversionsRemaining",
-                ),
-            );
-            return false;
+            return {
+                possible: false,
+                reasonKey: "FortuneMetalmind.Warnings.NoConversionsRemaining",
+            };
         }
 
         if (data.current >= data.max) {
-            ui.notifications.warn(
-                game.i18n.localize("FortuneMetalmind.Warnings.FortuneAtMax"),
-            );
+            return {
+                possible: false,
+                reasonKey: "FortuneMetalmind.Warnings.FortuneAtMax",
+            };
+        }
+
+        return { possible: true };
+    }
+
+    static async convertOpportunity(actor: Actor): Promise<boolean> {
+        const data = FortuneManager.getFortuneData(actor);
+        const fortuneGain = FortuneManager.settings.fortunePerOpportunity;
+        const check = FortuneManager.canConvertOpportunity(actor);
+
+        if (!check.possible) {
+            ui.notifications.warn(game.i18n.localize(check.reasonKey));
             return false;
         }
 
@@ -168,19 +193,30 @@ export class FortuneManager {
         return true;
     }
 
-    static async performRefocus(actor: Actor): Promise<void> {
-        Logger.log("performRefocus", { actorName: actor.name });
+    static canPerformRefocus(actor: Actor): FortuneActionCheck {
         const data = FortuneManager.getFortuneData(actor);
 
         if (!data.refocusAvailable) {
-            Logger.warn("performRefocus failed: not available", {
+            return {
+                possible: false,
+                reasonKey: "FortuneMetalmind.Warnings.RefocusNotAvailable",
+            };
+        }
+
+        return { possible: true };
+    }
+
+    static async performRefocus(actor: Actor): Promise<void> {
+        Logger.log("performRefocus", { actorName: actor.name });
+        const data = FortuneManager.getFortuneData(actor);
+        const check = FortuneManager.canPerformRefocus(actor);
+
+        if (!check.possible) {
+            Logger.warn("performRefocus failed", {
                 actorName: actor.name,
+                reasonKey: check.reasonKey,
             });
-            ui.notifications.warn(
-                game.i18n.localize(
-                    "FortuneMetalmind.Warnings.RefocusNotAvailable",
-                ),
-            );
+            ui.notifications.warn(game.i18n.localize(check.reasonKey));
             return;
         }
 

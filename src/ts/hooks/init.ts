@@ -3,6 +3,7 @@ import { MODULE_ID } from "../constants.ts";
 import { FortuneManager } from "../fortune-manager.ts";
 import { HandlebarHelpers } from "../handlebar-helpers.ts";
 import { Logger } from "../logger.ts";
+import { registerFortuneRows } from "../rows/fortune-rows.ts";
 import { Settings } from "../settings.ts";
 import type { Listener } from "./index.ts";
 
@@ -34,6 +35,7 @@ const Init: Listener = {
                 );
 
                 addFortuneToActorSchemas();
+                registerFortuneRows();
             }
 
             Logger.log("Fortune Metalmind initialized");
