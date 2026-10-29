@@ -22,10 +22,20 @@ Fortune is a homebrew mechanic that represents a Chromium Metalmind - a metalmin
 
 ### Tap, Store & Re-Connect
 
-Click the coins icon next to the Fortune resource to open a dialog with:
-- **Tap Fortune**: Spend Fortune for configured effects (manual application - see Future Plans for automatic roll integration)
-- **Store Fortune**: Convert Opportunities to Fortune (respects conversion limits)
+The module adds a **Fortune** section to the Actions tab on a character sheet. The section holds
+one row per configured tap option, named `Tap Fortune: <label>`, with its Fortune cost in the Cost
+column. Below the tap rows sit two more:
+
+- **Store Fortune**: Convert an Opportunity to Fortune (respects conversion limits)
 - **Re-Connect**: Meditate to attempt regaining your daily tap (d20 roll with configurable outcomes)
+
+Every row runs in one click. No row opens a dialog or a confirmation prompt. A row the character
+cannot currently use stays visible but turns grey. This happens when the character is out of
+Fortune, out of taps, or out of conversions. Adding or removing a tap option in the settings adds
+or removes its row the next time the sheet refreshes.
+
+Fortune only appears on player character sheets. Adversaries get no Fortune rows and no Fortune
+resource bar.
 
 All actions post to chat for transparency.
 
@@ -53,6 +63,9 @@ Highly configurable settings accessible through Foundry's module settings:
   - Default options: Advantage (1 Fortune), Auto-Success (2 Fortune), Guaranteed Nat20 (5 Fortune)
   - Support for custom macros and JavaScript scripts
   - Add/remove options as needed
+  - A label that already ends in a trailing price, such as `Advantage (1 Fortune)`, still works.
+    The module strips that suffix when it reads the label, so an older world's tap options keep
+    showing a clean name on the row.
 
 - **Refocus Outcomes Editor**: Configure the results of Refocus meditation based on d20 rolls
   - Default: 1-5 (lose 1 Fortune), 6-19 (regain tap), 20 (regain tap + gain 2 Fortune)
@@ -76,7 +89,7 @@ The module includes prepared (but currently disabled) Fortune tap mechanics that
 ### Automatic Opportunity Detection
 
 - Automatically detect natural 20s and plot die Opportunities
-- Offer players the choice to convert Opportunities to Fortune (currently manual via dialog)
+- Offer players the choice to convert Opportunities to Fortune (currently manual via the Store Fortune row)
 
 ## Installation
 

@@ -209,4 +209,97 @@ test.describe("fortune rows on the cosmere actions tab", () => {
             "Re-Connect",
         ]);
     });
+
+    test("orders the taps by cost even when the gm configures them out of order", async ({
+        character,
+        page,
+        tapOptionsControl,
+    }) => {
+        await character.openActionsTab();
+        const options = await tapOptionsControl.get();
+
+        await tapOptionsControl.set([...options].reverse());
+
+        const costs = await page.evaluate((actorId) => {
+            const actor = (globalThis as any).game.actors.get(actorId);
+            return actor.items
+                .filter(
+                    (item: any) =>
+                        item.getFlag("fortune-metalmind", "row") === "tap",
+                )
+                .map((item: any) => item.getFlag("fortune-metalmind", "cost"));
+        }, character.id);
+
+        expect(costs).toEqual([1, 2, 5]);
+    });
+
+    test("matches a search that spans the prefix and the label", async ({
+        character,
+        page,
+    }) => {
+        await character.openActionsTab();
+
+        const matched = await page.evaluate((actorId) => {
+            const actor = (globalThis as any).game.actors.get(actorId);
+            const query = "fortune: gain";
+            return actor.items
+                .filter((item: any) => item.name.toLowerCase().includes(query))
+                .map((item: any) => item.id);
+        }, character.id);
+
+        expect(matched).toContain(TAP_ROW);
+    });
+
+    test("spends fortune once when a tap row is double clicked", async ({
+        character,
+        page,
+    }) => {
+        await character.openActionsTab();
+
+        const before = await page.evaluate(
+            (actorId) =>
+                (globalThis as any).game.messages.contents.filter(
+                    (m: any) => m.speaker?.actor === actorId,
+                ).length,
+            character.id,
+        );
+
+        const row = character.sheet.locator(
+            `[data-section-id="fortune"] [data-item-id="${TAP_ROW}"] [data-action="use-item"]`,
+        );
+        await Promise.all([row.click(), row.click()]);
+
+        await expect(character.fortuneBar).toHaveText(bar(0, 5));
+
+        const after = await page.evaluate(
+            (actorId) =>
+                (globalThis as any).game.messages.contents.filter(
+                    (m: any) => m.speaker?.actor === actorId,
+                ).length,
+            character.id,
+        );
+        expect(after - before).toBe(1);
+    });
+
+    test("refuses a dragged copy of a generated row", async ({
+        character,
+        page,
+    }) => {
+        await character.openActionsTab();
+
+        const result = await page.evaluate((actorId) => {
+            const actor = (globalThis as any).game.actors.get(actorId);
+            const data = actor.items.get("fmfortunetap0000").toObject();
+            delete data._id;
+            return actor
+                .createEmbeddedDocuments("Item", [data])
+                .then((made: unknown[]) => ({
+                    created: made.length,
+                    persisted: actor._source.items.length,
+                }));
+        }, character.id);
+
+        expect(result.created).toBe(0);
+        expect(result.persisted).toBe(0);
+    });
 });

@@ -24,9 +24,11 @@ const SPECIAL_ACTION = "spe";
 const TAP_SORT_CHAR = "​";
 const STORE_SORT_KEY = "⁠";
 const RECONNECT_SORT_KEY = "⁠⁠";
-const MAX_COST_SORT_STEPS = 20;
+const MAX_COST_SORT_STEPS = 50;
 
 const settings = new Settings();
+const generatedRowIds = new Set<string>();
+const reportedOrphans = new Set<string>();
 
 let resourceAsserted = false;
 
@@ -52,7 +54,7 @@ function registerSection(): void {
         label: SECTION_LABEL,
         itemTypeLabel: SECTION_LABEL,
         default: false,
-        filter: (item: any) => !!item.getFlag?.(MODULE_ID, ROW_FLAG),
+        filter: isGeneratedRow,
     });
 
     if (!registered) {
@@ -99,22 +101,53 @@ function wrapPrepareData(): void {
 function injectRows(actor: any): void {
     const ItemClass = (globalThis as any).CONFIG.Item.documentClass;
     const collection = actor.getEmbeddedCollection("Item");
+    const rows = buildRows();
+
+    for (const data of rows) {
+        generatedRowIds.add(data._id);
+    }
 
     pruneRows(collection);
 
-    for (const data of buildRows()) {
+    for (const data of rows) {
         const row = new ItemClass(data, { parent: actor });
         assertFortuneResourceOnce(actor, row);
         collection.set(row.id, row, { modifySource: false });
     }
 }
 
+function isGeneratedRow(item: any): boolean {
+    return (
+        !!item?.getFlag?.(MODULE_ID, ROW_FLAG) && generatedRowIds.has(item.id)
+    );
+}
+
 function pruneRows(collection: any): void {
     for (const item of Array.from(collection) as any[]) {
-        if (item.getFlag?.(MODULE_ID, ROW_FLAG)) {
+        if (!item.getFlag?.(MODULE_ID, ROW_FLAG)) continue;
+
+        if (generatedRowIds.has(item.id)) {
             collection.delete(item.id, { modifySource: false });
+            continue;
         }
+
+        reportOrphanRow(item);
     }
+}
+
+function reportOrphanRow(item: any): void {
+    if (reportedOrphans.has(item.id)) return;
+
+    reportedOrphans.add(item.id);
+
+    Logger.warn(
+        "A persisted copy of a Fortune row is on an actor - leaving it visible so the player can delete it",
+        {
+            actorName: item.parent?.name,
+            itemId: item.id,
+            itemName: item.name,
+        },
+    );
 }
 
 function costSortKey(cost: number): string {
@@ -125,10 +158,12 @@ function costSortKey(cost: number): string {
 function buildRows(): FortuneRowData[] {
     const tapPrefix = game.i18n.localize("FortuneMetalmind.Tap.Title");
 
-    const taps = settings.tapOptions.map((option, index) => ({
+    const byCost = [...settings.tapOptions].sort((a, b) => a.cost - b.cost);
+
+    const taps = byCost.map((option, index) => ({
         _id: rowId(`tap${index.toString().padStart(4, "0")}`),
         type: "action" as const,
-        name: `${tapPrefix}: ${costSortKey(option.cost)}${option.label}`,
+        name: `${costSortKey(option.cost)}${tapPrefix}: ${option.label}`,
         system: {
             description: { value: option.description },
             activation: {
@@ -233,5 +268,5 @@ function assertFortuneResourceOnce(actor: any, row: any): void {
     }
 }
 
-export { COST_FLAG, LABEL_FLAG, registerFortuneRows, ROW_FLAG };
+export { COST_FLAG, isGeneratedRow, LABEL_FLAG, registerFortuneRows, ROW_FLAG };
 export type { FortuneRowKind };

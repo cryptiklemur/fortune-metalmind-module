@@ -1,6 +1,7 @@
 import { ActorReady } from "./actor-ready.ts";
 import { GreyRows } from "./grey-rows.ts";
 import { Init } from "./init.ts";
+import { PreCreateItem } from "./pre-create-item.ts";
 import { Rest } from "./rest.ts";
 import { Setup } from "./setup.ts";
 import { UseItem } from "./use-item.ts";
@@ -18,6 +19,7 @@ const HooksModule: Listener = {
             Rest,
             UseItem,
             GreyRows,
+            PreCreateItem,
         ];
 
         for (const listener of listeners) {

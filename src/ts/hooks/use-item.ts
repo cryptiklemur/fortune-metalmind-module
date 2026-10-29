@@ -4,6 +4,7 @@ import { Logger } from "../logger.ts";
 import {
     COST_FLAG,
     type FortuneRowKind,
+    isGeneratedRow,
     LABEL_FLAG,
     ROW_FLAG,
 } from "../rows/fortune-rows.ts";
@@ -67,23 +68,37 @@ function run(actor: any, item: any, kind: FortuneRowKind): Promise<void> {
     }
 }
 
+const inFlight = new Set<string>();
+
 const UseItem: Listener = {
     listen(): void {
         Hooks.on("cosmere-rpg.preUseItem", (item: any) => {
-            const kind = item?.getFlag?.(MODULE_ID, ROW_FLAG) as
-                | FortuneRowKind
-                | undefined;
+            if (!isGeneratedRow(item)) return;
 
-            if (!kind) return;
+            const kind = item.getFlag(MODULE_ID, ROW_FLAG) as FortuneRowKind;
 
             if (item.actor) {
-                run(item.actor, item, kind).catch((error: unknown) =>
-                    Logger.error("Fortune row action failed", {
-                        rowName: item.name,
+                const key = `${item.actor.id}:${item.id}`;
+
+                if (inFlight.has(key)) {
+                    Logger.debug("Fortune row already running, click dropped", {
+                        key,
                         kind,
-                        error,
-                    }),
-                );
+                    });
+                    return false;
+                }
+
+                inFlight.add(key);
+
+                run(item.actor, item, kind)
+                    .catch((error: unknown) =>
+                        Logger.error("Fortune row action failed", {
+                            rowName: item.name,
+                            kind,
+                            error,
+                        }),
+                    )
+                    .finally(() => inFlight.delete(key));
             }
 
             return false;

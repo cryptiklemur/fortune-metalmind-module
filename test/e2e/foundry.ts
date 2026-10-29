@@ -65,6 +65,31 @@ async function launchWorld(page: Page): Promise<void> {
     await page.waitForTimeout(3000);
 }
 
+const GAMEMASTER_SESSION_REAP_TIMEOUT = 90_000;
+
+async function waitForGamemasterSlotToFree(
+    select: Locator,
+    gamemaster: string,
+): Promise<void> {
+    try {
+        await select.page().waitForFunction(
+            (label) => {
+                const option = Array.from(
+                    document.querySelectorAll('select[name="userid"] option'),
+                ).find((o) => o.textContent?.trim() === label);
+                return option !== undefined && !option.disabled;
+            },
+            gamemaster,
+            { timeout: GAMEMASTER_SESSION_REAP_TIMEOUT, polling: 1000 },
+        );
+    } catch (error) {
+        throw new Error(
+            `user "${gamemaster}" still has an active session in world "${WORLD}" after ${GAMEMASTER_SESSION_REAP_TIMEOUT}ms`,
+            { cause: error },
+        );
+    }
+}
+
 async function joinAsGamemaster(page: Page): Promise<void> {
     if (!page.url().includes("/join")) return;
 
@@ -74,6 +99,7 @@ async function joinAsGamemaster(page: Page): Promise<void> {
     const gamemaster = options.find((o) => /gamemaster/i.test(o));
     if (!gamemaster) throw new Error(`world "${WORLD}" has no Gamemaster user`);
 
+    await waitForGamemasterSlotToFree(select, gamemaster.trim());
     await select.selectOption({ label: gamemaster });
     await page.locator('#join-game-form button[name="join"]').click();
     await page.waitForURL(/\/game/, { timeout: 120_000 });
@@ -87,6 +113,12 @@ async function enterWorld(page: Page): Promise<void> {
     await signIn(page);
     await launchWorld(page);
     await joinAsGamemaster(page);
+}
+
+async function closeWithoutThrowing(page: Page): Promise<void> {
+    try {
+        await page.close();
+    } catch {}
 }
 
 async function activateModule(page: Page): Promise<void> {
@@ -136,7 +168,7 @@ export const test = base.extend<
             await enterWorld(page);
             await activateModule(page);
             await use(page);
-            await page.close();
+            await closeWithoutThrowing(page);
         },
         { scope: "worker", timeout: 300_000 },
     ],
