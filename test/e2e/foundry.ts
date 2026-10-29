@@ -9,6 +9,11 @@ export interface Character {
     sheet: Locator;
     fortuneBar: Locator;
     fortuneButton: Locator;
+    notifications: Locator;
+    fortuneRows: Locator;
+    useRow(rowId: string): Promise<void>;
+    openActionsTab(): Promise<void>;
+    chatText(): Promise<string>;
 }
 
 async function signIn(page: Page): Promise<void> {
@@ -42,7 +47,12 @@ async function launchWorld(page: Page): Promise<void> {
 
     const row = page.locator(`[data-package-id="${WORLD}"]`);
     await row.waitFor({ timeout: 20_000 });
-    await row.hover();
+    await page.evaluate(() => {
+        for (const overlay of document.querySelectorAll(".tour-overlay")) {
+            overlay.remove();
+        }
+    });
+    await row.hover({ force: true });
     await page.waitForTimeout(500);
     await row.locator('a[data-action="worldLaunch"]').click({ force: true });
     await page.waitForURL(/\/(join|game)/, { timeout: 120_000 });
@@ -158,11 +168,52 @@ export const test = base.extend<
         }, name);
 
         const sheet = world.locator(`#${elementId}`);
+
+        await world.evaluate(() => {
+            for (const note of document.querySelectorAll("#notifications li")) {
+                note.remove();
+            }
+        });
+
         await use({
             id,
             sheet,
             fortuneBar: sheet.locator('.resource.for[data-id="for"] .value'),
             fortuneButton: sheet.locator(".fortune-action-btn"),
+            notifications: world.locator("#notifications"),
+            fortuneRows: sheet.locator(
+                '[data-section-id="fortune"] li.item[data-item-id]',
+            ),
+
+            async openActionsTab(): Promise<void> {
+                await sheet.locator('nav a[data-tab="actions"]').click();
+            },
+
+            async useRow(rowId: string): Promise<void> {
+                await sheet.locator('nav a[data-tab="actions"]').click();
+                await sheet
+                    .locator(
+                        `[data-section-id="fortune"] [data-item-id="${rowId}"] [data-action="use-item"]`,
+                    )
+                    .click();
+            },
+
+            chatText(): Promise<string> {
+                return world.evaluate(
+                    (actorId) =>
+                        globalThis.game.messages.contents
+                            .filter(
+                                (message: { speaker?: { actor?: string } }) =>
+                                    message.speaker?.actor === actorId,
+                            )
+                            .map(
+                                (message: { content?: string }) =>
+                                    message.content ?? "",
+                            )
+                            .join("\n"),
+                    id,
+                );
+            },
         });
 
         await world.evaluate(async () => {

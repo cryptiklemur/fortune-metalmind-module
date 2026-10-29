@@ -93,10 +93,20 @@ function injectRows(actor: any): void {
     const ItemClass = (globalThis as any).CONFIG.Item.documentClass;
     const collection = actor.getEmbeddedCollection("Item");
 
+    pruneRows(collection);
+
     for (const data of buildRows()) {
         const row = new ItemClass(data, { parent: actor });
         assertFortuneResource(actor, row);
         collection.set(row.id, row, { modifySource: false });
+    }
+}
+
+function pruneRows(collection: any): void {
+    for (const item of Array.from(collection) as any[]) {
+        if (item.getFlag?.(MODULE_ID, ROW_FLAG)) {
+            collection.delete(item.id, { modifySource: false });
+        }
     }
 }
 
@@ -208,4 +218,5 @@ function assertFortuneResource(actor: any, row: any): void {
     }
 }
 
-export { registerFortuneRows };
+export { COST_FLAG, registerFortuneRows, ROW_FLAG };
+export type { FortuneRowKind };

@@ -331,6 +331,11 @@
     cursor: not-allowed;
 }
 
+.application.sheet.actor .item-list .item.fortune-row-unusable > .details {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+
 .fortune-dialog .option-cost,
 .fortune-dialog .conversions-remaining,
 .fortune-dialog .reconnect-status {

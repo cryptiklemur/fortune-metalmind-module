@@ -47,6 +47,14 @@ const DEFAULT_TAP_OPTIONS: TapOption[] = [
 
 const TRAILING_PRICE = /\s*\(\s*\d+\s*fortune\s*\)$/i;
 
+function refreshFortuneRows(): void {
+    for (const actor of game.actors ?? []) {
+        if (actor.type !== "character") continue;
+        actor.reset();
+        actor.render();
+    }
+}
+
 const DEFAULT_REFOCUS_OUTCOMES: RefocusOutcome[] = [
     {
         min: 1,
@@ -174,6 +182,7 @@ class Settings {
             config: false,
             default: JSON.stringify(DEFAULT_TAP_OPTIONS, null, 2),
             type: String,
+            onChange: refreshFortuneRows,
         });
 
         game.settings.register(MODULE_ID, this.#REFOCUS_OUTCOMES, {
