@@ -23,3 +23,7 @@ types/foundry/package-lock.json
 /fortune-metalmind.mjs
 /vendor.mjs
 .codebasemap
+
+# Playwright
+test-results/
+playwright-report/
