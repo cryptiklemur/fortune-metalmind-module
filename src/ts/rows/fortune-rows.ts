@@ -17,11 +17,14 @@ const SECTION_SORT_ORDER = 550;
 const SECTION_LABEL = "FortuneMetalmind.Display.Fortune";
 const ROW_FLAG = "row";
 const COST_FLAG = "cost";
+const LABEL_FLAG = "label";
 const FORTUNE_RESOURCE = "for";
 const FREE_ACTION = "fre";
 const SPECIAL_ACTION = "spe";
 
 const settings = new Settings();
+
+let resourceAsserted = false;
 
 function registerFortuneRows(): void {
     registerSection();
@@ -97,7 +100,7 @@ function injectRows(actor: any): void {
 
     for (const data of buildRows()) {
         const row = new ItemClass(data, { parent: actor });
-        assertFortuneResource(actor, row);
+        assertFortuneResourceOnce(actor, row);
         collection.set(row.id, row, { modifySource: false });
     }
 }
@@ -135,7 +138,7 @@ function buildRows(): FortuneRowData[] {
                 ],
             },
         },
-        flags: rowFlags("tap", option.cost),
+        flags: rowFlags("tap", option.cost, option.label),
     }));
 
     return [
@@ -182,11 +185,13 @@ function buildRows(): FortuneRowData[] {
 function rowFlags(
     kind: FortuneRowKind,
     cost?: number,
+    label?: string,
 ): Record<string, unknown> {
     return {
         [MODULE_ID]: {
             [ROW_FLAG]: kind,
             ...(cost === undefined ? {} : { [COST_FLAG]: cost }),
+            ...(label === undefined ? {} : { [LABEL_FLAG]: label }),
         },
     };
 }
@@ -195,16 +200,17 @@ function rowId(suffix: string): string {
     return `fmfortune${suffix}`.padEnd(16, "0");
 }
 
-function assertFortuneResource(actor: any, row: any): void {
+function assertFortuneResourceOnce(actor: any, row: any): void {
+    if (resourceAsserted) return;
+
     const consumption = row.system?.activation?.consumption ?? [];
 
     for (const consume of consumption) {
-        if (
-            consume.type !== "resource" ||
-            consume.resource === FORTUNE_RESOURCE
-        ) {
-            continue;
-        }
+        if (consume.type !== "resource") continue;
+
+        resourceAsserted = true;
+
+        if (consume.resource === FORTUNE_RESOURCE) continue;
 
         Logger.error(
             "Fortune row consumption fell back to another resource - the cost column and any system-side deduction are wrong",
@@ -218,5 +224,5 @@ function assertFortuneResource(actor: any, row: any): void {
     }
 }
 
-export { COST_FLAG, registerFortuneRows, ROW_FLAG };
+export { COST_FLAG, LABEL_FLAG, registerFortuneRows, ROW_FLAG };
 export type { FortuneRowKind };

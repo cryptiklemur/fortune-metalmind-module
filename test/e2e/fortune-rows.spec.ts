@@ -134,4 +134,57 @@ test.describe("fortune rows on the cosmere actions tab", () => {
         );
         expect(await character.chatText()).toBe(posted);
     });
+
+    test("adds a row when a tap option is added, with no reload", async ({
+        character,
+        tapOptionsControl,
+    }) => {
+        await character.openActionsTab();
+        const options = await tapOptionsControl.get();
+
+        await tapOptionsControl.set([
+            ...options,
+            {
+                cost: 3,
+                label: "Extra Tap",
+                description: "a fourth tap option added for this test",
+                effect: "advantage",
+            },
+        ]);
+
+        await expect(
+            character.sheet.locator('[data-item-id="fmfortunetap0003"]'),
+        ).toHaveCount(1);
+        await expect(character.fortuneRows).toHaveCount(options.length + 1 + 2);
+    });
+
+    test("removes a row when its tap option is removed", async ({
+        character,
+        tapOptionsControl,
+    }) => {
+        await character.openActionsTab();
+        const options = await tapOptionsControl.get();
+
+        await tapOptionsControl.set(options.slice(0, -1));
+
+        await expect(
+            character.sheet.locator(`[data-item-id="${EXPENSIVE_TAP_ROW}"]`),
+        ).toHaveCount(0);
+        await expect(character.fortuneRows).toHaveCount(options.length - 1 + 2);
+    });
+
+    test("strips a saved trailing price suffix from a tap option's row name", async ({
+        character,
+        tapOptionsControl,
+    }) => {
+        await character.openActionsTab();
+        const options = await tapOptionsControl.get();
+        options[0] = { ...options[0], label: "Gain Advantage (1 Fortune)" };
+
+        await tapOptionsControl.set(options);
+
+        await expect(
+            character.sheet.locator(`[data-item-id="${TAP_ROW}"] .name`),
+        ).toHaveText("Tap Fortune: Gain Advantage");
+    });
 });

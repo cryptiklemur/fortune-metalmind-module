@@ -1,19 +1,25 @@
 import { test as base, type Locator, type Page } from "@playwright/test";
+import type { TapOption } from "../../src/ts/settings.ts";
 
 const FOUNDRY_URL = process.env.FOUNDRY_URL ?? "http://0.0.0.0:31000";
 const WORLD = process.env.FOUNDRY_WORLD ?? "fortune-test";
 const MODULE_ID = "fortune-metalmind";
+const TAP_OPTIONS_SETTING = "tapOptions";
 
 export interface Character {
     id: string;
     sheet: Locator;
     fortuneBar: Locator;
-    fortuneButton: Locator;
     notifications: Locator;
     fortuneRows: Locator;
     useRow(rowId: string): Promise<void>;
     openActionsTab(): Promise<void>;
     chatText(): Promise<string>;
+}
+
+export interface TapOptionsControl {
+    get(): Promise<TapOption[]>;
+    set(options: TapOption[]): Promise<void>;
 }
 
 async function signIn(page: Page): Promise<void> {
@@ -115,7 +121,11 @@ async function activateModule(page: Page): Promise<void> {
 }
 
 export const test = base.extend<
-    { character: Character; settings: { start: number; max: number } },
+    {
+        character: Character;
+        settings: { start: number; max: number };
+        tapOptionsControl: TapOptionsControl;
+    },
     { world: Page }
 >({
     world: [
@@ -152,6 +162,45 @@ export const test = base.extend<
         await use(settings);
     },
 
+    tapOptionsControl: async ({ world }, use) => {
+        const original = await world.evaluate(
+            ({ id, setting }) =>
+                globalThis.game.settings.get(id, setting) as string,
+            { id: MODULE_ID, setting: TAP_OPTIONS_SETTING },
+        );
+
+        await use({
+            get(): Promise<TapOption[]> {
+                return world.evaluate(
+                    ({ id, setting }) =>
+                        JSON.parse(
+                            globalThis.game.settings.get(id, setting) as string,
+                        ),
+                    { id: MODULE_ID, setting: TAP_OPTIONS_SETTING },
+                );
+            },
+            set(options: TapOption[]): Promise<void> {
+                return world.evaluate(
+                    async ({ id, setting, json }) => {
+                        await globalThis.game.settings.set(id, setting, json);
+                    },
+                    {
+                        id: MODULE_ID,
+                        setting: TAP_OPTIONS_SETTING,
+                        json: JSON.stringify(options),
+                    },
+                );
+            },
+        });
+
+        await world.evaluate(
+            async ({ id, setting, json }) => {
+                await globalThis.game.settings.set(id, setting, json);
+            },
+            { id: MODULE_ID, setting: TAP_OPTIONS_SETTING, json: original },
+        );
+    },
+
     character: async ({ world }, use, testInfo) => {
         const name = `e2e ${testInfo.testId}`;
         const { id, elementId } = await world.evaluate(async (actorName) => {
@@ -179,7 +228,6 @@ export const test = base.extend<
             id,
             sheet,
             fortuneBar: sheet.locator('.resource.for[data-id="for"] .value'),
-            fortuneButton: sheet.locator(".fortune-action-btn"),
             notifications: world.locator("#notifications"),
             fortuneRows: sheet.locator(
                 '[data-section-id="fortune"] li.item[data-item-id]',

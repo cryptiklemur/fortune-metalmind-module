@@ -2,19 +2,29 @@ import { Logger } from "../logger.ts";
 import { Settings } from "../settings.ts";
 import type { Listener } from "./index.ts";
 
+const staleAdversaries: string[] = [];
+
 const ActorReady: Listener = {
     listen(): void {
-        Hooks.on("ready", () => {
-            Logger.log("Initializing Fortune on all actors...");
+        Hooks.once("init", snapshotStaleAdversaries);
+
+        Hooks.on("ready", async () => {
+            if (!game.users?.activeGM?.isSelf) return;
+
+            Logger.log("Initializing Fortune on character actors...");
 
             for (const actor of game.actors ?? []) {
+                if (actor.type !== "character") continue;
                 initializeFortune(actor);
             }
+
+            await stripFortuneFromAdversaries();
         });
 
         Hooks.on("preCreateActor", (actor: unknown) => {
             const typed = actor as Actor;
 
+            if (typed.type !== "character") return;
             if (!needsFortune(typed)) return;
 
             (typed as any).updateSource(startingFortuneSource());
@@ -66,6 +76,47 @@ async function initializeFortune(actor: Actor): Promise<void> {
             actorName: actor.name,
             error,
         });
+    }
+}
+
+function snapshotStaleAdversaries(): void {
+    for (const source of game.data?.actors ?? []) {
+        if (source.type !== "adversary" || !source._id) continue;
+        if ((source as any).system?.resources?.for === undefined) continue;
+
+        staleAdversaries.push(source._id);
+    }
+}
+
+async function stripFortuneFromAdversaries(): Promise<void> {
+    if (!staleAdversaries.length) return;
+
+    const updates = staleAdversaries.map((id) => ({
+        _id: id,
+        "system.resources.-=for": null,
+    }));
+    staleAdversaries.length = 0;
+
+    try {
+        await (globalThis as any).foundry.helpers.SocketInterface.dispatch(
+            "modifyDocument",
+            {
+                type: "Actor",
+                action: "update",
+                operation: {
+                    updates,
+                    diff: false,
+                    render: false,
+                    modifiedTime: Date.now(),
+                },
+            },
+        );
+
+        Logger.log("Stripped the unused Fortune field from adversaries", {
+            count: updates.length,
+        });
+    } catch (error) {
+        Logger.error("Failed to strip Fortune from adversaries", { error });
     }
 }
 

@@ -4,6 +4,7 @@ import { Logger } from "../logger.ts";
 import {
     COST_FLAG,
     type FortuneRowKind,
+    LABEL_FLAG,
     ROW_FLAG,
 } from "../rows/fortune-rows.ts";
 import type { Listener } from "./index.ts";
@@ -15,16 +16,9 @@ async function announce(actor: any, content: string): Promise<void> {
     });
 }
 
-function tapLabel(item: any): string {
-    const prefix = `${game.i18n.localize("FortuneMetalmind.Tap.Title")}: `;
-
-    return item.name.startsWith(prefix)
-        ? item.name.slice(prefix.length)
-        : item.name;
-}
-
 async function tap(actor: any, item: any): Promise<void> {
     const cost = Number(item.getFlag(MODULE_ID, COST_FLAG) ?? 0);
+    const label = item.getFlag(MODULE_ID, LABEL_FLAG);
 
     if (!(await FortuneManager.tapFortune(actor, cost))) return;
 
@@ -34,7 +28,7 @@ async function tap(actor: any, item: any): Promise<void> {
 
     await announce(
         actor,
-        `${flavor}<p><strong>${actor.name}</strong> tapped their Fortune Metalmind: <em>${tapLabel(item)}</em></p>`,
+        `${flavor}<p><strong>${actor.name}</strong> tapped their Fortune Metalmind: <em>${label}</em></p>`,
     );
 }
 

@@ -27,14 +27,13 @@ const Init: Listener = {
                     label: "Fortune",
                     modes: {
                         character: { default: "override", valid: ["override"] },
-                        adversary: { default: "override", valid: ["override"] },
                     },
                 };
                 Logger.log(
                     "Fortune resource added to CONFIG.COSMERE.resources",
                 );
 
-                addFortuneToActorSchemas();
+                addFortuneToCharacterSchema();
                 registerFortuneRows();
             }
 
@@ -43,77 +42,67 @@ const Init: Listener = {
     },
 };
 
-function addFortuneToActorSchemas(): void {
-    const dataModels = (globalThis as any).CONFIG?.Actor?.dataModels;
+function addFortuneToCharacterSchema(): void {
+    const model = (globalThis as any).CONFIG?.Actor?.dataModels?.character;
 
-    if (!dataModels) {
+    if (!model) {
         Logger.warn(
-            "CONFIG.Actor.dataModels not found - cannot add Fortune to the actor schema",
+            "CONFIG.Actor.dataModels.character not found - cannot add Fortune to the character schema",
         );
         return;
     }
 
-    for (const [actorType, model] of Object.entries(dataModels) as [
-        string,
-        any,
-    ][]) {
-        const defineSchema = model.defineSchema.bind(model);
+    const defineSchema = model.defineSchema.bind(model);
 
-        model.defineSchema = () => {
-            const schema = defineSchema();
-            const resources = schema.resources;
+    model.defineSchema = () => {
+        const schema = defineSchema();
+        const resources = schema.resources;
 
-            if (!resources?.fields?.foc) {
-                Logger.warn(
-                    "Actor schema has no resources.foc to model Fortune on",
-                    { actorType },
-                );
-                return schema;
-            }
+        if (!resources?.fields?.foc) {
+            Logger.warn(
+                "Character schema has no resources.foc to model Fortune on",
+            );
+            return schema;
+        }
 
-            if ("for" in resources.fields) return schema;
+        if ("for" in resources.fields) return schema;
 
-            const fields = (globalThis as any).foundry.data.fields;
-            const DerivedValueField =
-                resources.fields.foc.fields.max.constructor;
-            const count = () =>
-                new fields.NumberField({
-                    required: true,
-                    nullable: false,
-                    integer: true,
-                    min: 0,
-                    initial: 0,
-                });
-
-            const fortune = new fields.SchemaField({
-                value: count(),
-                max: new DerivedValueField(count()),
-                bonus: new fields.NumberField({
-                    required: true,
-                    nullable: false,
-                    integer: true,
-                    initial: 0,
-                }),
+        const fields = (globalThis as any).foundry.data.fields;
+        const DerivedValueField = resources.fields.foc.fields.max.constructor;
+        const count = () =>
+            new fields.NumberField({
+                required: true,
+                nullable: false,
+                integer: true,
+                min: 0,
+                initial: 0,
             });
 
-            fortune.name = "for";
-            fortune.parent = resources;
-            resources.fields.for = fortune;
+        const fortune = new fields.SchemaField({
+            value: count(),
+            max: new DerivedValueField(count()),
+            bonus: new fields.NumberField({
+                required: true,
+                nullable: false,
+                integer: true,
+                initial: 0,
+            }),
+        });
 
-            return schema;
-        };
+        fortune.name = "for";
+        fortune.parent = resources;
+        resources.fields.for = fortune;
 
-        if (Object.hasOwn(model, "_schema")) {
-            Logger.warn(
-                "Actor schema was already built before Fortune could be added",
-                { actorType },
-            );
-        }
+        return schema;
+    };
+
+    if (Object.hasOwn(model, "_schema")) {
+        Logger.warn(
+            "Character schema was already built before Fortune could be added",
+        );
     }
 
-    Logger.log("Fortune added to actor schemas", {
-        actorTypes: Object.keys(dataModels),
-    });
+    Logger.log("Fortune added to the character actor schema");
 }
 
 export { Init };

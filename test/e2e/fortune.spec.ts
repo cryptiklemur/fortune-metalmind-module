@@ -4,75 +4,47 @@ const bar = (current: number, max: number) =>
     new RegExp(`^\\s*${current}\\s*/\\s*${max}\\s*$`);
 
 test.describe("fortune on a character sheet", () => {
-    test("shows the fortune bar and the tap button", async ({
+    test("shows the fortune bar with the actor's starting value and maximum", async ({
         character,
         settings,
     }) => {
         await expect(character.fortuneBar).toHaveText(
             bar(settings.start, settings.max),
         );
-        await expect(character.fortuneButton).toHaveCount(1);
     });
 
-    test("adds fortune when an opportunity is stored", async ({
+    test("repairs an actor's fortune that was never set, on world reload", async ({
         page,
         character,
         settings,
     }) => {
-        await character.fortuneButton.click();
-        await page.locator(".fortune-store-btn").click();
+        test.setTimeout(90_000);
 
-        await expect(character.fortuneBar).toHaveText(
-            bar(settings.start + 1, settings.max),
+        await page.evaluate(async (actorId) => {
+            const actor = globalThis.game.actors.get(actorId);
+            await actor?.update({
+                "system.resources.for.max.useOverride": false,
+                "system.resources.for.value": 0,
+            });
+        }, character.id);
+
+        await expect(character.fortuneBar).not.toHaveText(
+            bar(settings.start, settings.max),
         );
-    });
 
-    test("removes fortune when the metalmind is tapped", async ({
-        page,
-        character,
-        settings,
-    }) => {
-        await character.fortuneButton.click();
-        await page.locator('.fortune-tap-btn[data-cost="1"]').click();
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await page.waitForFunction(() => globalThis.game?.ready === true, {
+            timeout: 60_000,
+            polling: 500,
+        });
+        await page.evaluate(async (actorId) => {
+            const actor = globalThis.game.actors.get(actorId);
+            await actor?.sheet.render(true);
+        }, character.id);
+        await page.waitForTimeout(2000);
 
-        await expect(character.fortuneBar).toHaveText(
-            bar(settings.start - 1, settings.max),
-        );
-    });
-
-    test("blocks a tap that costs more fortune than the actor has", async ({
-        page,
-        character,
-        settings,
-    }) => {
-        await character.fortuneButton.click();
-
-        const tooExpensive = page.locator(
-            `.fortune-tap-btn[data-cost="${settings.max}"]`,
-        );
-        await expect(tooExpensive).toBeDisabled();
         await expect(character.fortuneBar).toHaveText(
             bar(settings.start, settings.max),
         );
-    });
-
-    test("rolls a re-connect and closes the dialog", async ({
-        page,
-        character,
-    }) => {
-        await character.fortuneButton.click();
-        await page.locator(".fortune-reconnect-btn").click();
-
-        await expect(page.locator(".application.dialog")).toHaveCount(0);
-
-        const rolled = await page.evaluate(
-            (id) =>
-                globalThis.game.messages.contents.some(
-                    (message: { speaker?: { actor?: string } }) =>
-                        message.speaker?.actor === id,
-                ),
-            character.id,
-        );
-        expect(rolled).toBe(true);
     });
 });
