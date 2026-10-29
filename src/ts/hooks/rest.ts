@@ -3,12 +3,11 @@ import type { Listener } from "./index.ts";
 
 const Rest: Listener = {
     listen(): void {
-        Hooks.on("cosmere-rpg.rest", async (actor) => {
-            const cosmereActor = actor as any;
-
+        Hooks.on("cosmere-rpg.rest", async (actor, type) => {
+            if (type !== "long") return;
             if (!FortuneManager.settings.enableAutoRestDetection) return;
 
-            await FortuneManager.longRest(cosmereActor);
+            await FortuneManager.longRest(actor as any);
         });
     },
 };
