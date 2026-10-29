@@ -21,6 +21,10 @@ export interface Character {
     chatText(): Promise<string>;
 }
 
+export interface NumberSettings {
+    set(key: string, value: number): Promise<void>;
+}
+
 export interface TapOptionsControl {
     get(): Promise<TapOption[]>;
     set(options: TapOption[]): Promise<void>;
@@ -159,6 +163,7 @@ async function activateModule(page: Page): Promise<void> {
 export const test = base.extend<
     {
         character: Character;
+        numberSettings: NumberSettings;
         settings: { start: number; max: number };
         tapOptionsControl: TapOptionsControl;
     },
@@ -196,6 +201,38 @@ export const test = base.extend<
             MODULE_ID,
         );
         await use(settings);
+    },
+
+    numberSettings: async ({ world }, use) => {
+        const original = new Map<string, number>();
+
+        const write = (key: string, value: number): Promise<void> =>
+            world.evaluate(
+                async ({ id, key, value }) => {
+                    await globalThis.game.settings.set(id, key, value);
+                },
+                { id: MODULE_ID, key, value },
+            );
+
+        await use({
+            async set(key: string, value: number): Promise<void> {
+                if (!original.has(key)) {
+                    original.set(
+                        key,
+                        await world.evaluate(
+                            ({ id, key }) =>
+                                globalThis.game.settings.get(id, key) as number,
+                            { id: MODULE_ID, key },
+                        ),
+                    );
+                }
+                await write(key, value);
+            },
+        });
+
+        for (const [key, value] of original) {
+            await write(key, value);
+        }
     },
 
     tapOptionsControl: async ({ world }, use) => {

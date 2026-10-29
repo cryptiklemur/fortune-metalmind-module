@@ -2,11 +2,7 @@
 import { MODULE_ID } from "./constants.ts";
 import { Logger } from "./logger.ts";
 import { Settings } from "./settings.ts";
-import {
-    DEFAULT_FORTUNE_DATA,
-    type FortuneData,
-    type FortuneTapCost,
-} from "./types/fortune-data.ts";
+import type { FortuneData, FortuneTapCost } from "./types/fortune-data.ts";
 
 export type FortuneActionCheck =
     | { possible: true }
@@ -22,6 +18,16 @@ export class FortuneManager {
             | Partial<FortuneData>
             | undefined;
 
+        const tapsMax = FortuneManager.settings.dailyTapsPerRest;
+        const refocusMax = FortuneManager.settings.refocusAttemptsPerRest;
+
+        const tapsRemaining =
+            flagData?.tapsRemaining ??
+            (flagData?.tapAvailable === false ? 0 : tapsMax);
+        const refocusRemaining =
+            flagData?.refocusRemaining ??
+            (flagData?.refocusAvailable === false ? 0 : refocusMax);
+
         const result: FortuneData = {
             current:
                 systemResources.value ??
@@ -29,16 +35,17 @@ export class FortuneManager {
             max: systemResources.max?.useOverride
                 ? FortuneManager.settings.maximumFortune
                 : (systemResources.max?.value ?? 0),
-            tapAvailable:
-                flagData?.tapAvailable ?? DEFAULT_FORTUNE_DATA.tapAvailable,
+            tapsRemaining,
+            tapsMax,
+            tapAvailable: tapsRemaining > 0,
             conversionsRemaining:
                 flagData?.conversionsRemaining ??
                 FortuneManager.settings.opportunityConversionsPerRest,
             conversionsMax:
                 FortuneManager.settings.opportunityConversionsPerRest,
-            refocusAvailable:
-                flagData?.refocusAvailable ??
-                DEFAULT_FORTUNE_DATA.refocusAvailable,
+            refocusRemaining,
+            refocusMax,
+            refocusAvailable: refocusRemaining > 0,
         };
 
         return result;
@@ -71,10 +78,9 @@ export class FortuneManager {
         }
 
         const flagUpdates: Partial<FortuneData> = {
-            tapAvailable: updated.tapAvailable,
+            tapsRemaining: updated.tapsRemaining,
             conversionsRemaining: updated.conversionsRemaining,
-            conversionsMax: updated.conversionsMax,
-            refocusAvailable: updated.refocusAvailable,
+            refocusRemaining: updated.refocusRemaining,
         };
 
         await Promise.all([
@@ -144,7 +150,7 @@ export class FortuneManager {
 
         await FortuneManager.setFortuneData(actor, {
             current: data.current - cost,
-            tapAvailable: false,
+            tapsRemaining: data.tapsRemaining - 1,
         });
 
         Logger.log("tapFortune success", {
@@ -235,7 +241,7 @@ export class FortuneManager {
 
         if (outcome) {
             const updates: Partial<FortuneData> = {
-                refocusAvailable: false,
+                refocusRemaining: data.refocusRemaining - 1,
             };
 
             if (outcome.fortuneDelta !== 0) {
@@ -246,7 +252,10 @@ export class FortuneManager {
             }
 
             if (outcome.restoreTap) {
-                updates.tapAvailable = true;
+                updates.tapsRemaining = Math.min(
+                    data.tapsRemaining + 1,
+                    data.tapsMax,
+                );
             }
 
             await FortuneManager.setFortuneData(actor, updates);
@@ -257,10 +266,10 @@ export class FortuneManager {
     static async longRest(actor: Actor): Promise<void> {
         Logger.log("longRest", { actorName: actor.name });
         await FortuneManager.setFortuneData(actor, {
-            tapAvailable: true,
+            tapsRemaining: FortuneManager.settings.dailyTapsPerRest,
             conversionsRemaining:
                 FortuneManager.settings.opportunityConversionsPerRest,
-            refocusAvailable: true,
+            refocusRemaining: FortuneManager.settings.refocusAttemptsPerRest,
         });
         Logger.log("longRest complete", { actorName: actor.name });
     }

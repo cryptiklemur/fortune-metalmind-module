@@ -119,11 +119,11 @@ test.describe("fortune rows on the cosmere actions tab", () => {
                         globalThis.game.actors
                             .get(id)
                             ?.getFlag("fortune-metalmind", "fortuneData")
-                            ?.refocusAvailable,
+                            ?.refocusRemaining,
                     character.id,
                 ),
             )
-            .toBe(false);
+            .toBe(0);
 
         const posted = await character.chatText();
         expect(posted).toContain("attempts to re-connect");
@@ -299,5 +299,79 @@ test.describe("fortune rows on the cosmere actions tab", () => {
 
         expect(result.created).toBe(0);
         expect(result.persisted).toBe(0);
+    });
+
+    test("allows as many taps per rest as the gm configured", async ({
+        character,
+        numberSettings,
+        page,
+        settings,
+    }) => {
+        await numberSettings.set("dailyTapsPerRest", 2);
+        await page.evaluate(async (actorId) => {
+            const actor = (globalThis as any).game.actors.get(actorId);
+            await actor.update({ "system.resources.for.value": 3 });
+        }, character.id);
+        await character.openActionsTab();
+
+        await character.useRow(TAP_ROW);
+        await expect(character.fortuneBar).toHaveText(bar(2, settings.max));
+
+        await character.useRow(TAP_ROW);
+        await expect(character.fortuneBar).toHaveText(bar(1, settings.max));
+
+        await character.useRow(TAP_ROW);
+        await expect(character.notifications).toContainText(
+            "Fortune tap already used",
+        );
+        await expect(character.fortuneBar).toHaveText(bar(1, settings.max));
+    });
+
+    test("allows as many re-connects per rest as the gm configured", async ({
+        character,
+        numberSettings,
+        page,
+    }) => {
+        const remaining = () =>
+            page.evaluate(
+                (id) =>
+                    (globalThis as any).game.actors
+                        .get(id)
+                        ?.getFlag("fortune-metalmind", "fortuneData")
+                        ?.refocusRemaining,
+                character.id,
+            );
+
+        await numberSettings.set("refocusAttemptsPerRest", 2);
+        await character.openActionsTab();
+
+        await character.useRow(RECONNECT_ROW);
+        await expect.poll(remaining).toBe(1);
+
+        await character.useRow(RECONNECT_ROW);
+        await expect.poll(remaining).toBe(0);
+
+        await character.useRow(RECONNECT_ROW);
+        await expect(character.notifications).toContainText(
+            "Re-Connect already used",
+        );
+    });
+
+    test("reads a world saved before taps became a counter as spent", async ({
+        character,
+        page,
+    }) => {
+        await page.evaluate(async (actorId) => {
+            const actor = (globalThis as any).game.actors.get(actorId);
+            await actor.setFlag("fortune-metalmind", "fortuneData", {
+                tapAvailable: false,
+            });
+        }, character.id);
+
+        await character.useRow(TAP_ROW);
+
+        await expect(character.notifications).toContainText(
+            "Fortune tap already used",
+        );
     });
 });
