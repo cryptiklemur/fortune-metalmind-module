@@ -1,30 +1,6 @@
 import { MODULE_ID } from "../constants.ts";
-import type { RefocusOutcome } from "../settings.ts";
-
-const DEFAULT_REFOCUS_OUTCOMES: RefocusOutcome[] = [
-    {
-        min: 1,
-        max: 5,
-        fortuneDelta: -1,
-        restoreTap: false,
-        description: "Refocus failed. Lost 1 Fortune point.",
-    },
-    {
-        min: 6,
-        max: 19,
-        fortuneDelta: 0,
-        restoreTap: true,
-        description: "Refocus successful! Daily tap restored.",
-    },
-    {
-        min: 20,
-        max: 20,
-        fortuneDelta: 2,
-        restoreTap: true,
-        description:
-            "Perfect meditation! Daily tap restored and gained 2 Fortune points!",
-    },
-];
+import { FortuneManager } from "../fortune-manager.ts";
+import { DEFAULT_REFOCUS_OUTCOMES, type RefocusOutcome } from "../settings.ts";
 
 export class RefocusOutcomesForm extends (globalThis as any).FormApplication {
     static get defaultOptions(): any {
@@ -63,41 +39,7 @@ export class RefocusOutcomesForm extends (globalThis as any).FormApplication {
     }
 
     getData(): object {
-        const setting = game.settings.get(
-            MODULE_ID,
-            "refocusOutcomes",
-        ) as string;
-        let outcomes: RefocusOutcome[] = [];
-
-        try {
-            outcomes = JSON.parse(setting);
-        } catch {
-            outcomes = [
-                {
-                    min: 1,
-                    max: 5,
-                    fortuneDelta: -1,
-                    restoreTap: false,
-                    description: "Lose 1 Fortune",
-                },
-                {
-                    min: 6,
-                    max: 19,
-                    fortuneDelta: 0,
-                    restoreTap: true,
-                    description: "Regain daily tap",
-                },
-                {
-                    min: 20,
-                    max: 20,
-                    fortuneDelta: 2,
-                    restoreTap: true,
-                    description: "Regain tap + gain 2 Fortune",
-                },
-            ];
-        }
-
-        return { outcomes };
+        return { outcomes: FortuneManager.settings.refocusOutcomes };
     }
 
     protected async _updateObject(_event: Event, formData: any): Promise<void> {

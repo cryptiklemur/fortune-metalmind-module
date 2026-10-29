@@ -1,4 +1,5 @@
 import { MODULE_ID } from "../constants.ts";
+import { FortuneManager } from "../fortune-manager.ts";
 import { DEFAULT_TAP_OPTIONS, type TapOption } from "../settings.ts";
 
 export class TapOptionsForm extends (globalThis as any).FormApplication {
@@ -42,17 +43,7 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
         });
 
         html.find(".add-option").on("click", async () => {
-            const setting = game.settings.get(
-                MODULE_ID,
-                "tapOptions",
-            ) as string;
-            let options: TapOption[] = [];
-
-            try {
-                options = JSON.parse(setting);
-            } catch {
-                options = [];
-            }
+            const options = FortuneManager.settings.tapOptions;
 
             const newOption: TapOption = {
                 cost: 1,
@@ -72,17 +63,7 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
 
         html.find(".remove-option").on("click", async (event) => {
             const index = $(event.currentTarget).data("index");
-            const setting = game.settings.get(
-                MODULE_ID,
-                "tapOptions",
-            ) as string;
-            let options: TapOption[] = [];
-
-            try {
-                options = JSON.parse(setting);
-            } catch {
-                options = [];
-            }
+            const options = FortuneManager.settings.tapOptions;
 
             options.splice(index, 1);
             await game.settings.set(
@@ -112,14 +93,7 @@ export class TapOptionsForm extends (globalThis as any).FormApplication {
     }
 
     getData(): object {
-        const setting = game.settings.get(MODULE_ID, "tapOptions") as string;
-        let options: TapOption[] = [];
-
-        try {
-            options = JSON.parse(setting);
-        } catch {
-            options = [];
-        }
+        const options = FortuneManager.settings.tapOptions;
 
         return {
             options,

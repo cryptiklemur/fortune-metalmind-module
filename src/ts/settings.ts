@@ -287,4 +287,10 @@ class Settings {
     }
 }
 
-export { Settings, DEFAULT_TAP_OPTIONS, type TapOption, type RefocusOutcome };
+export {
+    Settings,
+    DEFAULT_REFOCUS_OUTCOMES,
+    DEFAULT_TAP_OPTIONS,
+    type TapOption,
+    type RefocusOutcome,
+};
